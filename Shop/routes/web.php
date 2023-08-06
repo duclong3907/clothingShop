@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\User\UserController;
 
 
 /*
@@ -28,3 +29,5 @@ Route::middleware([
 });
 
 route::get('/redirect',[HomeController::class, 'redirect']);
+
+route::get('/show_user',[UserController::class, 'show_user']);
