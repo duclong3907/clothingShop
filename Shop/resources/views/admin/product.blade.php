@@ -54,6 +54,7 @@ $index=0;
                   <div class="col-md-4">
                       <div class="form-group">
                           <label>Image: </label>
+                          <button type="button" class="btn btn-warning" onclick="$('#upload_file').click()" style="margin-top: -10px;">Upload photos</button>
                           <input type="file" id="upload_file" hidden>
                           <input type="text" name="image" id="image" class="form-control" required value="{{ ($product != null)?$product->image:'' }}">
                           <img src="" style="max-height: 220px;" id="image_img">

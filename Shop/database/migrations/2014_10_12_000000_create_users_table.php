@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('image')->nullable();
+            $table->text('image')->nullable();
             $table->unsignedBigInteger('usertype')->default(2);
             $table->foreign('usertype')->references('id')->on('roles');
             $table->string('phone')->nullable();
