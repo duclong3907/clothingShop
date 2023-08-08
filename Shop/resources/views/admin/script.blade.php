@@ -16,3 +16,7 @@
     <!-- endinject -->
     <!-- Custom js for this page -->
     <script src="assets/js/dashboard.js"></script>
+
+    <script src="js/upload.js"></script>
+
+    <script src="https://cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script>
