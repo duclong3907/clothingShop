@@ -12,6 +12,7 @@ class ProductController extends Controller
     public function show_product(){
 
         $product = product ::leftJoin('categories', 'categories.id', '=', 'products.category_id')
+        ->where('products.deleted', 0)
         ->select('products.*', 'categories.name as category')
         ->get();
 
@@ -65,7 +66,8 @@ class ProductController extends Controller
     public function delete_product($id){
         $product = product::find($id);
 
-        $product ->delete();
+        $product ->deleted = 1;
+        $product ->save();
         return redirect()->back()->with('message', 'Product deleted successfully');
     }
 

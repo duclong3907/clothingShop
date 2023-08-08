@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Product;
 
 class CategoryController extends Controller
 {
@@ -41,7 +42,14 @@ class CategoryController extends Controller
 
 
     public function delete_category($id){
-            $category = Category::find($id);
+            $category = Category::findOrFail($id);
+            // Kiểm tra xem category có sản phẩm liên kết trong bảng product hay không
+            $productCount = Product::where('category_id', $id)->count();
+            if ($productCount > 0) {
+                return redirect()->back()->with('message', 'Cannot delete category. It has associated products.');
+            }
+    
+            // Nếu không có sản phẩm liên kết, thì mới tiến hành xóa category
             $category->delete();
             
             return redirect()->back()->with('message', 'Category deleted successfully');

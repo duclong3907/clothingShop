@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('quantity')->nullable();
             $table->string('price')->nullable();
             $table->string('discount_price')->nullable();
+            $table->tinyInteger('deleted')->default(0);
             $table->foreign('category_id')->references('id')->on('categories');
             $table->timestamps();
         });
