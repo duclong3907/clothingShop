@@ -7,12 +7,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\User;
+use App\Models\Product;
 
 
 class HomeController extends Controller
 {
     public function index(){
-        return view('frontend.userpage');
+        $products = Product::where('deleted', 0)
+                    ->paginate(6);
+        return view('frontend.userpage', compact('products'));
     }
 
     public function redirect()
@@ -23,7 +26,10 @@ class HomeController extends Controller
 
             return view('admin.home');
         } else{
-            return view('frontend.userpage');
+            $products = Product::where('deleted', 0)
+                        ->paginate(6);
+
+            return view('frontend.userpage', compact('products'));
         }
 
     }
