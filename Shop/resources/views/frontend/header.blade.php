@@ -12,7 +12,7 @@
                            <a class="nav-link" href="{{url('/')}}">Home <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                           <a class="nav-link" href="">Products</a>
+                           <a class="nav-link" href="{{url('products')}}">Products</a>
                         </li>
                         <li class="nav-item">
                            <a class="nav-link" href="">Contact</a>

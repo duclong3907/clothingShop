@@ -56,7 +56,7 @@
             {{ $products->links() }}
          </div>
          <div class="btn-box">
-            <a href="">
+            <a href="{{url('products')}}">
                View All products
             </a>
          </div>

@@ -20,7 +20,7 @@
                             Discover the hottest deals of the week that will leave you thrilled! Explore our handpicked selection of discounted items, ranging from electronics to fashion, and grab incredible savings while they last. Shop now and save!  
                          </p>
                          <div class="btn-box">
-                            <a href="" class="btn1">
+                            <a href="{{url('products')}}" class="btn1">
                             Shop Now
                             </a>
                          </div>
@@ -45,7 +45,7 @@
                            Hurry and take advantage of our limited-time offer! Enjoy a whopping 20% discount on all products. From fashion to electronics, it's the perfect opportunity to grab your favorite items at unbeatable prices. Shop now and save!
                          </p>
                          <div class="btn-box">
-                            <a href="" class="btn1">
+                            <a href="{{url('products')}}" class="btn1">
                             Shop Now
                             </a>
                          </div>
@@ -70,7 +70,7 @@
                            Unlock exclusive savings with our limited time offers and special discounts. From flash sales to seasonal promotions, seize the opportunity to enjoy unbeatable prices on a wide range of products. Don't miss out!
                          </p>
                          <div class="btn-box">
-                            <a href="" class="btn1">
+                            <a href="{{url('products')}}" class="btn1">
                             Shop Now
                             </a>
                          </div>
