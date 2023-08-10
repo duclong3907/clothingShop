@@ -11,6 +11,8 @@
       <title>{{$title}}</title>
       <!-- bootstrap core css -->
       <link rel="stylesheet" type="text/css" href="themes/frontend/css/bootstrap.css" />
+      <!-- icon boostrap -->
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
       <!-- font awesome style -->
       <link href="themes/frontend/css/font-awesome.min.css" rel="stylesheet" />
       <!-- Custom styles for this template -->

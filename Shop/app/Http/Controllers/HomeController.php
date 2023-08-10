@@ -34,4 +34,13 @@ class HomeController extends Controller
 
     }
 
+    //show product details
+    public function product_details($id){
+        $product = Product::find($id);
+        $productList = Product::where('deleted', 0)
+                        ->orderBy('created_at', 'asc')
+                        ->paginate(3);
+        return view('frontend.product_details', compact('product', 'productList'));
+    }
+
 }

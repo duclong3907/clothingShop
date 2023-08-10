@@ -30,3 +30,7 @@ Route::middleware([
 
 route::get('/redirect',[HomeController::class, 'redirect']);
 
+// customer interface
+
+route::get('/product_details/{id}',[HomeController::class, 'product_details']);
+
