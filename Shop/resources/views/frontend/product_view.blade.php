@@ -10,7 +10,7 @@
                            {{$product->title}}
                            </a>
                            
-                           <form action="" method="POST">
+                           <form action="{{url('add_cart', $product->id)}}" method="POST">
                               @csrf
                               <div class="row">
                                  <div class="col-md-4">

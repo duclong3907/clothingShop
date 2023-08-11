@@ -126,15 +126,38 @@ class HomeController extends Controller
         }
     }
 
+    //cart
     public function show_cart(){
         if(Auth::id()){
             $id=Auth::user()->id;
             $cart = cart::where('user_id','=',$id)->get();
             $cartNum = $this->getCartNum();
+            $user = Auth::user();
 
-            return view('frontend.showcart',compact('cart', 'cartNum'));
+            return view('frontend.showcart',compact('cart', 'cartNum','user'));
         }else{
             return redirect('login');
         }
     }
+
+    public function update_cart(Request $request,$id){
+        $cart = cart::find($id);
+        $quantity = $request->quantity;
+        if($quantity >0){
+            $cart->quantity= $quantity;
+            $cart->total_price= $cart->price*$request->quantity;
+            $cart ->save();
+        } else{
+            $cart->delete();
+        }
+        
+        return redirect()->back();
+    }
+
+    public function delete_cart($id){
+        $cart=cart::find($id);
+        $cart->delete();
+        return redirect()->back();
+    }
+
 }

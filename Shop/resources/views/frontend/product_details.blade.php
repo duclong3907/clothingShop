@@ -160,15 +160,15 @@ $title="Detail";
       var formData = new FormData(document.getElementById("quantity-form"));
       var xhr = new XMLHttpRequest();
 
+      xhr.open("POST", "{{url('add_cart', $product->id)}}", true);
+      xhr.send(formData);
       xhr.onreadystatechange = function () {
          if (xhr.readyState === XMLHttpRequest.DONE) {
             // Xử lý phản hồi từ máy chủ tại đây (nếu cần)
-            // window.location.reload();
+            window.location.reload();
          }
       };
 
-      xhr.open("POST", "{{url('add_cart', $product->id)}}", true);
-      xhr.send(formData);
    }
 
 
