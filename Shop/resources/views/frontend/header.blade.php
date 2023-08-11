@@ -42,6 +42,11 @@
                         </li>
                         <li class="nav-item">
                            <a class="nav-link" href="{{url('show_cart')}}">
+                           @if (Route::has('login'))   
+                              @if($cartNum>0)
+                                 <label class="badge bg-danger" style="position: absolute; top:15px; right:45px; color: white;">{{$cartNum}}</label>
+                              @endif
+                           @endif
                               <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                                  <g>
                                     <g>

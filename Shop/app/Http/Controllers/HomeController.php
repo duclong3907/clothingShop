@@ -16,7 +16,9 @@ class HomeController extends Controller
     public function index(){
         $products = Product::where('deleted', 0)
                     ->paginate(6);
-        return view('frontend.userpage', compact('products'));
+
+        $cartNum = $this->getCartNum();
+        return view('frontend.userpage', compact('products','cartNum'));
     }
 
     public function redirect()
@@ -29,8 +31,9 @@ class HomeController extends Controller
         } else{
             $products = Product::where('deleted', 0)
                         ->paginate(6);
+            $cartNum = $this->getCartNum();
 
-            return view('frontend.userpage', compact('products'));
+            return view('frontend.userpage', compact('products','cartNum'));
         }
 
     }
@@ -38,7 +41,9 @@ class HomeController extends Controller
     //Show product view
     public function products(){
         $product = Product::all()->where('deleted', 0);
-        return view('frontend.all_product',compact('product'));
+
+        $cartNum = $this->getCartNum();
+        return view('frontend.all_product',compact('product','cartNum'));
    }
 
     //show product details
@@ -47,7 +52,9 @@ class HomeController extends Controller
         $productList = Product::where('deleted', 0)
                         ->orderBy('created_at', 'asc')
                         ->paginate(3);
-        return view('frontend.product_details', compact('product', 'productList'));
+
+        $cartNum = $this->getCartNum();
+        return view('frontend.product_details', compact('product', 'productList','cartNum'));
     }
 
     public function add_cart(Request $request, $id){
@@ -104,4 +111,18 @@ class HomeController extends Controller
         }
     }
 
+    //Show quantity 
+    private function getCartNum(){
+        if(isset(Auth::user()->id)) {
+            $id = Auth::user()->id;
+            $cart = cart::where('user_id','=',$id)->get();
+            $num = 0;
+            foreach ($cart as $item) {
+                $num += $item->quantity;
+            }
+            return $num;
+        } else {
+            return 0;
+        }
+    }
 }
