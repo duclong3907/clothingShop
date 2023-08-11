@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\Cart;
+use App\Models\Order;
+use App\Models\Order_detail;
 
 
 class HomeController extends Controller
@@ -157,6 +159,46 @@ class HomeController extends Controller
     public function delete_cart($id){
         $cart=cart::find($id);
         $cart->delete();
+        return redirect()->back();
+    }
+
+    //payment cash
+    public function cash_order(Request $request) {
+        $user = Auth::user();
+        $userId = $user->id;
+    
+        $cartItems = cart::where('user_id', '=', $userId)->get();
+    
+        $totalMoney = 0;
+        foreach ($cartItems as $cartItem) {
+            $totalMoney += $cartItem->total_price;
+        }
+        if($totalMoney>0){
+            $order = new Order();
+            $order->name = $request->name;
+            $order->email = $user->email;
+            $order->phone = $request->phone;
+            $order->address = $request->address;
+            $order->user_id = $userId;
+            $order->total_money = $totalMoney;
+            $order->payment_status = 'Cash on delivery';
+            $order->delivery_status = 'processing';
+            $order->save();
+        
+            foreach ($cartItems as $cartItem) {
+                $orderDetail = new Order_detail();
+                $orderDetail->order_id = $order->id;
+                $orderDetail->product_id = $cartItem->product_id;
+                $orderDetail->price = $cartItem->price;
+                $orderDetail->num = $cartItem->quantity;
+                $orderDetail->total_money = $cartItem->total_price;
+                $orderDetail->save();
+            }
+        }
+    
+        // Xóa giỏ hàng của người dùng sau khi đã đặt hàng
+        cart::where('user_id', '=', $userId)->delete();
+    
         return redirect()->back();
     }
 

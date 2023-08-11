@@ -43,4 +43,6 @@ route::post('/update_cart/{id}',[HomeController::class, 'update_cart']);
 
 route::get('/delete_cart/{id}',[HomeController::class, 'delete_cart']);
 
+route::post('/cash_order',[HomeController::class, 'cash_order']);
+
 

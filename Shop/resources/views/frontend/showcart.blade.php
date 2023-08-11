@@ -87,9 +87,6 @@ $totalmoney=0;
             padding: 0 1vh;
         }
 
-        a {
-            padding: 0 1vh;
-        }
 
         .back-to-shop {
             margin-top: 4.5rem;
@@ -165,7 +162,7 @@ $totalmoney=0;
         }
 
         a:hover {
-            color: black;
+            color: blue;
             text-decoration: none;
         }
 
@@ -212,6 +209,7 @@ $totalmoney=0;
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
+                            @if ($cartNum>0)
                             <tbody>
                                 @foreach($cart as $cart)
                                 <div id="cart-id" data-cart-id="{{ isset($cart) ? $cart->id : '' }}" hidden></div>
@@ -243,7 +241,12 @@ $totalmoney=0;
 
                                 @endforeach
                             </tbody>
+                            @endif
                         </table>
+                        @if($cartNum==0)
+                        <p style="text-align:center;">There are no products in the cart, please return to the home to
+                            purchase products!!!</p>
+                        @endif
                     </div>
                     <div class="back-to-shop"><a href="{{url('/')}}">&leftarrow; Back to shop</a></div>
                 </div>
@@ -252,23 +255,26 @@ $totalmoney=0;
                         <h5><b>Summary</b></h5>
                     </div>
                     <hr>
-                    <div class="row">
-                        <input type="text" value="{{$user->name}}" name="name">
-                        <input type="text" value="{{$user->phone}}" name="phone">
-                        <input type="text" value="{{$user->address}}" name="address">
-                    </div>
-                    <div class="row">
-                        <p>Payment methods:</p>
-                        <select>
-                            <option class="text-muted">Cash On Delivery</option>
-                            <option class="text-muted">Pay Using Card</option>
-                        </select>
-                    </div>
-                    <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                        <div class="col" style="font-weight:800;">TOTAL PRICE</div>
-                        <div>{{ number_format($totalmoney)}} VNDC</div>
-                    </div>
-                    <input type="submit" value="CHECKOUT" class="btnSubmit"></input>
+                    <form action="" method="POST" id="checkoutForm">
+                        @csrf
+                        <div class="row">
+                            <input type="text" value="{{$user->name}}" name="name" id="name">
+                            <input type="text" value="{{$user->phone}}" name="phone" id="phone">
+                            <input type="text" value="{{$user->address}}" name="address" id="address">
+                        </div>
+                        <div class="row">
+                            <p>Payment methods:</p>
+                            <select id="paymentMethod">
+                                <option class="text-muted">Cash On Delivery</option>
+                                <option class="text-muted">Pay Using Card</option>
+                            </select>
+                        </div>
+                        <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                            <div class="col" style="font-weight:800;">TOTAL PRICE</div>
+                            <div>{{ number_format($totalmoney)}} VNDC</div>
+                        </div>
+                        <input type="submit" value="CHECKOUT" class="btnSubmit"></input>
+                    </form>
                 </div>
             </div>
         </div>
@@ -302,5 +308,25 @@ $totalmoney=0;
         });
 
     }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var checkoutButton = document.querySelector(".btnSubmit");
+        var paymentSelect = document.getElementById("paymentMethod");
+        var checkoutForm = document.getElementById("checkoutForm"); // Đã thêm dòng này
+
+        checkoutButton.addEventListener("click", function (event) {
+            event.preventDefault();
+
+            var selectedPaymentMethod = paymentSelect.value;
+
+            if (selectedPaymentMethod === "Cash On Delivery") {
+                checkoutForm.action = "{{url('cash_order')}}";
+                checkoutForm.submit();
+            } else if (selectedPaymentMethod === "Pay Using Card") {
+                window.location.href = "";
+            }
+        });
+    });
+
 
 </script>
