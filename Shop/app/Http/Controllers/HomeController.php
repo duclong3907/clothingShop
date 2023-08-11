@@ -125,4 +125,16 @@ class HomeController extends Controller
             return 0;
         }
     }
+
+    public function show_cart(){
+        if(Auth::id()){
+            $id=Auth::user()->id;
+            $cart = cart::where('user_id','=',$id)->get();
+            $cartNum = $this->getCartNum();
+
+            return view('frontend.showcart',compact('cart', 'cartNum'));
+        }else{
+            return redirect('login');
+        }
+    }
 }
