@@ -34,4 +34,21 @@ class OrderController extends Controller
         $order->save();
         return redirect()->back()->with('message', 'Order delivered successfully');
     }
+
+    public function order_detail($id){
+        $orderId = order::find($id);
+
+        $order_id = $orderId -> id;
+
+
+        $created_at = $orderId->created_at->format('Y-m-d H:i:s'); // Định dạng theo ngày-tháng-năm giờ:phút:giây
+
+        $itemList = Order_detail::leftJoin('products', 'products.id', '=', 'order_details.product_id')
+            ->where('order_details.order_id', $order_id)
+            ->where('order_details.created_at', $created_at)
+            ->select('order_details.*', 'products.title', 'products.image')
+            ->get();
+            
+            return view('admin.order_detail', compact('orderId', 'itemList'));
+    }
 }
