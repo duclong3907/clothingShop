@@ -221,6 +221,25 @@ class HomeController extends Controller
    
            return redirect('login');
         }
-      }
+    }
+
+    public function cancel_order($id){
+        $order = order::find($id);
+        $order -> delivery_status = 'You canceled the order';
+        $order->save();
+        return redirect()->back()->with('message', 'Order cancelled successfully');;
+   }    
+
+   public function delete_orders($id){
+    $order = order::find($id);
+    $order_id = $order -> id;
+
+    $order_detail = Order_detail::where('order_id', $order_id);
+    $order_detail->delete();
+    $order ->delete();
+
+    return redirect()->back()->with('message', 'Order deleted successfully');
+    
+   }
 
 }

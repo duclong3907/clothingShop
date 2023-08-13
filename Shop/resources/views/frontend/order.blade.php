@@ -126,7 +126,12 @@ $index1=$index2=$index3=$index4=$index5=0;
                             <div class="col align-self-center text-right text-muted">{{$cartNum}} Products</div>
                         </div>
                     </div>
-
+                    @if(session()->has('message'))
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                        {{ session()->get('message') }}
+                    </div>
+                    @endif
                     <div class="d-flex justify-content-center">
                         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                             <li class="nav-item" role="presentation">
@@ -187,7 +192,15 @@ $index1=$index2=$index3=$index4=$index5=0;
                                             <td>{{$orderAll->price}}</td>
                                             <td>{{$orderAll->payment_status}}</td>
                                             <td>{{$orderAll->delivery_status}}</td>
-                                            <td><a href="" class="btn btn-danger">Cancel</a></td>
+                                            @if ($orderAll->delivery_status=='processing')
+                                            <td><a href="{{url('cancel_order', $orderAll->id)}}" class="btn btn-warning"
+                                                    onclick="return confirm('Are you sure to cancel this order!')"><i class="bi bi-x-octagon"></i> Cancel</a>
+                                            </td>
+                                            @else
+                                            <td><a href="{{url('delete_orders', $orderAll->id)}}" class="btn btn-danger"
+                                                    onclick="return confirm('Are you sure to delete this order!')"><i class="bi bi-trash"></i> Delete</a>
+                                            </td>
+                                            @endif
                                         </tr>
                                         <?php $index1++?>
                                         @endforeach
@@ -221,7 +234,8 @@ $index1=$index2=$index3=$index4=$index5=0;
                                     </thead>
                                     <tbody class="table-group-divider">
                                         @foreach($order as $wait)
-                                        @if($wait->payment_status == 'Cash on delivery' && $wait->delivery_status =='processing')
+                                        @if($wait->payment_status == 'Cash on delivery' && $wait->delivery_status ==
+                                        'processing')
                                         <tr class="table-warning">
                                             <td scope="row">{{$wait->title}}</td>
                                             <td><img src="{{$wait->image}}" alt="orders" style="width: 3.5rem;"></td>
@@ -229,7 +243,8 @@ $index1=$index2=$index3=$index4=$index5=0;
                                             <td>{{$wait->price}}</td>
                                             <td>{{$wait->payment_status}}</td>
                                             <td>{{$wait->delivery_status}}</td>
-                                            <td><a href="" class="btn btn-danger">Cancel</a>
+                                            <td><a href="{{url('cancel_order', $orderAll->id)}}" class="btn btn-warning"
+                                                    onclick="return confirm('Are you sure to cancel this order!')"><i class="bi bi-x-octagon"></i> Cancel</a>
                                             </td>
                                             <?php $index2++?>
                                             @endif
@@ -274,7 +289,8 @@ $index1=$index2=$index3=$index4=$index5=0;
                                             <td>{{$process->price}}</td>
                                             <td>{{$process->payment_status}}</td>
                                             <td>{{$process->delivery_status}}</td>
-                                            <td><a href="" class="btn btn-danger">Cancel</a>
+                                            <td><a href="{{url('cancel_order', $orderAll->id)}}" class="btn btn-warning"
+                                                    onclick="return confirm('Are you sure to cancel this order!')"><i class="bi bi-x-octagon"></i> Cancel</a>
                                             </td>
                                             <?php $index3++?>
                                             @endif
@@ -320,7 +336,9 @@ $index1=$index2=$index3=$index4=$index5=0;
                                             <td>{{$complete->price}}</td>
                                             <td>{{$complete->payment_status}}</td>
                                             <td>{{$complete->delivery_status}}</td>
-                                            <td style="color:blue;">Not Allowed</td>
+                                            <td><a href="{{url('delete_orders', $orderAll->id)}}" class="btn btn-danger"
+                                                    onclick="return confirm('Are you sure to delete this order!')"><i class="bi bi-trash"></i> Delete</a>
+                                            </td>
                                             <?php $index4++?>
                                         @endif
                                         </tr>
@@ -336,6 +354,47 @@ $index1=$index2=$index3=$index4=$index5=0;
 
                         <div class="tab-pane fade" id="pills-cancel" role="tabpanel" aria-labelledby="pills-cancel-tab"
                             tabindex="0">
+
+                            <div class="table-responsive">
+                                <table class="table table-striped
+                                        table-hover	
+                                        table-borderless
+                                        table-primary
+                                        align-middle">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Image</th>
+                                            <th>Quantity</th>
+                                            <th>Price</th>
+                                            <th>Payment Status</th>
+                                            <th>Delivery</th>
+                                            <th>Cancel</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-group-divider">
+                                        @foreach($order as $cancel)
+                                        @if($cancel->delivery_status == 'You canceled the order')
+                                        <tr class="table-warning">
+                                            <td scope="row">{{$cancel->title}}</td>
+                                            <td><img src="{{$cancel->image}}" alt="orders" style="width: 3.5rem;"></td>
+                                            <td>{{$cancel->num}}</td>
+                                            <td>{{$cancel->price}}</td>
+                                            <td>{{$cancel->payment_status}}</td>
+                                            <td>{{$cancel->delivery_status}}</td>
+                                            <td><a href="{{url('delete_orders', $orderAll->id)}}" class="btn btn-danger"
+                                                    onclick="return confirm('Are you sure to delete this order!')"><i class="bi bi-trash"></i> Delete</a>
+                                            </td>
+                                            <?php $index5++?>
+                                            @endif
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                                @if($index5 == 0)
+                                <p style="text-align:center;">There are no orders!</p>
+                                @endif
+                            </div>
 
                         </div>
                     </div>

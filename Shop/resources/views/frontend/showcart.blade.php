@@ -234,7 +234,7 @@ $totalmoney=0;
                                     <td>{{number_format($cart->total_price)}}</td>
                                     <td>
                                         <a href="{{url('delete_cart',$cart->id)}}" onclick="confirmation(event)"
-                                            class="btn btn-danger">Delete</a>
+                                            class="btn btn-danger"><i class="bi bi-trash"></i> Delete</a>
                                     </td>
                                 </tr>
                                 <?php $totalmoney = $totalmoney + $cart->total_price ?>

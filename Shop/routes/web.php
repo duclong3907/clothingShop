@@ -47,4 +47,8 @@ route::post('/cash_order',[HomeController::class, 'cash_order']);
 
 route::get('/show_order',[HomeController::class, 'show_order']);
 
+route::get('/cancel_order/{id}',[HomeController::class, 'cancel_order']);
+
+route::get('/delete_orders/{id}',[HomeController::class, 'delete_orders']);
+
 
