@@ -312,7 +312,7 @@ $totalmoney=0;
     document.addEventListener("DOMContentLoaded", function () {
         var checkoutButton = document.querySelector(".btnSubmit");
         var paymentSelect = document.getElementById("paymentMethod");
-        var checkoutForm = document.getElementById("checkoutForm"); // Đã thêm dòng này
+        var checkoutForm = document.getElementById("checkoutForm");
 
         checkoutButton.addEventListener("click", function (event) {
             event.preventDefault();
