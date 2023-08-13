@@ -18,7 +18,7 @@
                            <a class="nav-link" href="">Contact</a>
                         </li>
                         <li class="nav-item">
-                           <a class="nav-link" href="">Order</a>
+                           <a class="nav-link" href="{{url('show_order')}}">Order</a>
                         </li>
                         <li class="nav-item dropdown">
                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> <span class="nav-label" id="account">Account <span class="caret"></span></a>

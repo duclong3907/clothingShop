@@ -13,6 +13,8 @@
       <link rel="stylesheet" type="text/css" href="themes/frontend/css/bootstrap.css" />
       <!-- icon boostrap -->
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+      <!-- Link to Bootstrap JS and Popper.js -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
       <!-- font awesome style -->
       <link href="themes/frontend/css/font-awesome.min.css" rel="stylesheet" />
       <!-- Custom styles for this template -->

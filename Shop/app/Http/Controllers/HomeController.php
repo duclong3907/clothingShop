@@ -202,4 +202,25 @@ class HomeController extends Controller
         return redirect()->back();
     }
 
+    //order
+    public function show_order(){
+
+        if(Auth::id()){
+   
+           $user = Auth::user();
+           $userid = $user->id;
+           $cartNum = $this->getCartNum();
+
+           $order= Order_detail::leftJoin('products', 'products.id', '=', 'order_details.product_id')
+            ->leftJoin('orders', 'orders.id', '=', 'order_details.order_id')
+            ->where('orders.user_id', $userid)
+            ->select('order_details.*', 'products.title', 'products.image', 'orders.*')
+            ->get();
+           return view('frontend.order',compact('order', 'cartNum'));
+        } else{
+   
+           return redirect('login');
+        }
+      }
+
 }
