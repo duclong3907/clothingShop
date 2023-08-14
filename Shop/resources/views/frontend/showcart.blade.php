@@ -323,7 +323,7 @@ $totalmoney=0;
                 checkoutForm.action = "{{url('cash_order')}}";
                 checkoutForm.submit();
             } else if (selectedPaymentMethod === "Pay Using Card") {
-                window.location.href = "";
+                window.location.href = "{{url('stripe',$totalmoney)}}";
             }
         });
     });

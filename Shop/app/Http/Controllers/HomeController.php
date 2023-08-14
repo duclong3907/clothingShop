@@ -242,4 +242,10 @@ class HomeController extends Controller
     
    }
 
+   public function stripe($totalmoney){
+    $cartNum = $this->getCartNum();
+
+    return view('frontend.stripe', compact('totalmoney','cartNum'));
+    }   
+
 }

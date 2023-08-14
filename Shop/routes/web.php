@@ -51,4 +51,6 @@ route::get('/cancel_order/{id}',[HomeController::class, 'cancel_order']);
 
 route::get('/delete_orders/{id}',[HomeController::class, 'delete_orders']);
 
+route::get('/stripe/{totalmoney}',[HomeController::class, 'stripe']);
+
 
