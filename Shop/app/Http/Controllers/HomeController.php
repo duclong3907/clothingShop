@@ -11,7 +11,7 @@ use App\Models\Product;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Order_detail;
-
+use RealRashid\SweetAlert\Facades\Alert;
 use Session;
 use Stripe;
 
@@ -86,6 +86,8 @@ class HomeController extends Controller
 
                 $cart->save();
 
+                Alert::success('Product added successfully', 'We have added product to cart');
+
                 return redirect()->back();
 
             } else{
@@ -106,6 +108,8 @@ class HomeController extends Controller
                 $cart->quantity= $request->quantity;
                 $cart->total_price=$cart->price*$request->quantity;
                 $cart->save();
+
+                Alert::success('Product added successfully', 'We have added product to cart');
 
                 return redirect()->back();
 
@@ -201,6 +205,7 @@ class HomeController extends Controller
     
         // Xóa giỏ hàng của người dùng sau khi đã đặt hàng
         cart::where('user_id', '=', $userId)->delete();
+        Alert::success('Payment Successfully', 'You have successfully paid, your order will be delivered as soon as possible');
     
         return redirect()->back();
     }
@@ -248,7 +253,6 @@ class HomeController extends Controller
    public function stripe($totalmoney){
     $cartNum = $this->getCartNum();
 
-    session(['totalmoney' => 0]);
     return view('frontend.stripe', compact('totalmoney','cartNum'));
     }   
 
@@ -298,7 +302,7 @@ class HomeController extends Controller
       
         // Xóa giỏ hàng của người dùng sau khi đã đặt hàng
         cart::where('user_id', '=', $userId)->delete();
-
+        Alert::success('Payment Successfully', 'You have successfully paid, your order will be delivered as soon as possible');
         Session::flash('success', 'Payment successful!');
               
         return back();

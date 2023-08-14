@@ -22,6 +22,7 @@ $title="All Products";
    </style>
    </head>
    <body>
+   @include('sweetalert::alert')
       <div class="hero_area">
       @include('frontend.header')
          <!-- slider section -->

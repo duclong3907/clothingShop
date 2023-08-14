@@ -180,7 +180,7 @@ $totalmoney=0;
 </head>
 
 <body>
-
+@include('sweetalert::alert')
     <div class="hero_area">
         @include('frontend.header')
 

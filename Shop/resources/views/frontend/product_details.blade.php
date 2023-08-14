@@ -10,6 +10,7 @@ $title="Detail";
 </head>
 
 <body>
+@include('sweetalert::alert')
    <div class="hero_area">
       @include('frontend.header')
 
