@@ -12,6 +12,9 @@ use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Order_detail;
 
+use Session;
+use Stripe;
+
 
 class HomeController extends Controller
 {
@@ -245,7 +248,60 @@ class HomeController extends Controller
    public function stripe($totalmoney){
     $cartNum = $this->getCartNum();
 
+    session(['totalmoney' => 0]);
     return view('frontend.stripe', compact('totalmoney','cartNum'));
     }   
+
+    public function stripePost(Request $request, $totalmoney)
+    {
+        $amount = (int) ($totalmoney * 100 / 23000);
+        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+    
+        Stripe\Charge::create ([
+                "amount" => $amount,
+                "currency" => "usd",
+                "source" => $request->stripeToken,
+                "description" => "Thank for payment." 
+        ]);
+
+        $user=Auth::user();
+
+        $userId=$user->id;
+
+        $cartItems = cart::where('user_id', '=', $userId)->get();
+    
+        $totalMoney = 0;
+        foreach ($cartItems as $cartItem) {
+            $totalMoney += $cartItem->total_price;
+        }
+
+        $order = new Order();
+        $order->name = $request->name;
+        $order->email = $request->email;
+        $order->phone = $request->phone;
+        $order->address = $request->address;
+        $order->user_id = $userId;
+        $order->total_money = $totalMoney;
+        $order->payment_status= 'Paid';
+        $order->delivery_status= 'processing';
+        $order->save();
+
+        foreach ($cartItems as $cartItem) {
+            $orderDetail = new Order_detail();
+            $orderDetail->order_id = $order->id;
+            $orderDetail->product_id = $cartItem->product_id;
+            $orderDetail->price = $cartItem->price;
+            $orderDetail->num = $cartItem->quantity;
+            $orderDetail->total_money = $cartItem->total_price;
+            $orderDetail->save();
+        }
+      
+        // Xóa giỏ hàng của người dùng sau khi đã đặt hàng
+        cart::where('user_id', '=', $userId)->delete();
+
+        Session::flash('success', 'Payment successful!');
+              
+        return back();
+    }
 
 }

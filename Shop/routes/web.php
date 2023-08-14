@@ -53,4 +53,6 @@ route::get('/delete_orders/{id}',[HomeController::class, 'delete_orders']);
 
 route::get('/stripe/{totalmoney}',[HomeController::class, 'stripe']);
 
+Route::post('stripe/{totalmoney}', [HomeController::class, 'stripePost'])->name('stripe.post');
+
 
