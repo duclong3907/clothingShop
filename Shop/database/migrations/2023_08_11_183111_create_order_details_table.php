@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('num');
             $table->integer('total_money');
             $table->foreign('order_id')->references('id')->on('orders');
+            $table->integer('deleted')->default(0);
             $table->timestamps();
         });
     }

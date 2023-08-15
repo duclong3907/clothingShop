@@ -234,8 +234,7 @@ $index1=$index2=$index3=$index4=$index5=0;
                                     </thead>
                                     <tbody class="table-group-divider">
                                         @foreach($order as $wait)
-                                        @if($wait->payment_status == 'Cash on delivery' && $wait->delivery_status ==
-                                        'processing')
+                                        @if($wait->payment_status == 'Cash' && $wait->delivery_status =='processing')
                                         <tr class="table-warning">
                                             <td scope="row">{{$wait->title}}</td>
                                             <td><img src="{{$wait->image}}" alt="orders" style="width: 3.5rem;"></td>
@@ -374,7 +373,7 @@ $index1=$index2=$index3=$index4=$index5=0;
                                     </thead>
                                     <tbody class="table-group-divider">
                                         @foreach($order as $cancel)
-                                        @if($cancel->delivery_status == 'You canceled the order')
+                                        @if($cancel->delivery_status == 'Cancelled')
                                         <tr class="table-warning">
                                             <td scope="row">{{$cancel->title}}</td>
                                             <td><img src="{{$cancel->image}}" alt="orders" style="width: 3.5rem;"></td>

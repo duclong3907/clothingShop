@@ -189,7 +189,7 @@ class HomeController extends Controller
             $order->address = $request->address;
             $order->user_id = $userId;
             $order->total_money = $totalMoney;
-            $order->payment_status = 'Cash on delivery';
+            $order->payment_status = 'Cash';
             $order->delivery_status = 'processing';
             $order->save();
         
@@ -202,12 +202,12 @@ class HomeController extends Controller
                 $orderDetail->total_money = $cartItem->total_price;
                 $orderDetail->save();
             }
+             // Xóa giỏ hàng của người dùng sau khi đã đặt hàng
+            cart::where('user_id', '=', $userId)->delete();
+            Alert::success('Payment Successfully', 'You have successfully paid, your order will be delivered as soon as possible');
+        } else{
+            Alert::warning('Warning', 'The shopping cart is empty. Please add products to cart');
         }
-    
-        // Xóa giỏ hàng của người dùng sau khi đã đặt hàng
-        cart::where('user_id', '=', $userId)->delete();
-        Alert::success('Payment Successfully', 'You have successfully paid, your order will be delivered as soon as possible');
-    
         return redirect()->back();
     }
 
@@ -223,6 +223,7 @@ class HomeController extends Controller
            $order= Order_detail::leftJoin('products', 'products.id', '=', 'order_details.product_id')
             ->leftJoin('orders', 'orders.id', '=', 'order_details.order_id')
             ->where('orders.user_id', $userid)
+            ->where('order_details.deleted',0)
             ->select('order_details.*', 'products.title', 'products.image', 'orders.*')
             ->get();
            return view('frontend.order',compact('order', 'cartNum'));
@@ -234,7 +235,7 @@ class HomeController extends Controller
 
     public function cancel_order($id){
         $order = order::find($id);
-        $order -> delivery_status = 'You canceled the order';
+        $order -> delivery_status = 'Cancelled';
         $order->save();
         return redirect()->back()->with('message', 'Order cancelled successfully');;
    }    
@@ -243,9 +244,12 @@ class HomeController extends Controller
     $order = order::find($id);
     $order_id = $order -> id;
 
-    $order_detail = Order_detail::where('order_id', $order_id);
-    $order_detail->delete();
-    $order ->delete();
+    $order_details = Order_detail::where('order_id', $order_id)->get();
+
+    foreach ($order_details as $detail) {
+        $detail->deleted = 1;
+        $detail->save();
+    }
 
     return redirect()->back()->with('message', 'Order deleted successfully');
     
@@ -259,15 +263,6 @@ class HomeController extends Controller
 
     public function stripePost(Request $request, $totalmoney)
     {
-        $amount = (int) ($totalmoney * 100 / 23000);
-        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-    
-        Stripe\Charge::create ([
-                "amount" => $amount,
-                "currency" => "usd",
-                "source" => $request->stripeToken,
-                "description" => "Thank for payment." 
-        ]);
 
         $user=Auth::user();
 
@@ -281,11 +276,21 @@ class HomeController extends Controller
         }
 
         if($totalMoney>0){
+            $amount = (int) ($totalmoney * 100 / 23000);
+            Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+        
+            Stripe\Charge::create ([
+                    "amount" => $amount,
+                    "currency" => "usd",
+                    "source" => $request->stripeToken,
+                    "description" => "Thank for payment." 
+            ]);
+
             $order = new Order();
-            $order->name = $request->name;
-            $order->email = $request->email;
-            $order->phone = $request->phone;
-            $order->address = $request->address;
+            $order->name = $user->name;
+            $order->email = $user->email;
+            $order->phone = $user->phone;
+            $order->address = $user->address;
             $order->user_id = $userId;
             $order->total_money = $totalMoney;
             $order->payment_status= 'Paid';
@@ -306,6 +311,8 @@ class HomeController extends Controller
             cart::where('user_id', '=', $userId)->delete();
             Alert::success('Payment Successfully', 'You have successfully paid, your order will be delivered as soon as possible');
             Session::flash('success', 'Payment successful!');
+        } else{
+            Alert::warning('Warning', 'The shopping cart is empty. Please add products to cart');
         }
               
         return back();
