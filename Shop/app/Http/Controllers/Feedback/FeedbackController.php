@@ -12,4 +12,19 @@ class FeedbackController extends Controller
         $dataList=feedback::all();
         return view('admin.show_feedback', compact('dataList'));
     }
+
+    public function markRead( $id){
+        $feedback = feedback::find($id);
+        
+        $feedback->status = "Read";
+        $feedback->save();
+        return redirect()->back();
+    }
+
+    public function delete_feedback($id){
+        $feedback = feedback::find($id);
+
+        $feedback ->delete();
+        return redirect()->back()->with('message', 'Feedback deleted successfully');
+    }
 }

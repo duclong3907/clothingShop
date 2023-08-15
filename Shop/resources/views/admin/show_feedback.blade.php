@@ -49,7 +49,7 @@ $index=0;
               <th class="border-top-0" style="width: 100px">Action</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody >
             @foreach($dataList as $item)
             <tr>
               <td>{{ ++$index }}</td>
@@ -60,12 +60,23 @@ $index=0;
               <td>{{ $item->note }}</td>
               <td>{{ getTimeFormat($item->updated_at) }}</td>
               <td>
+                @if($item->status == 0)
                 <label class="label" style="color:#d99100;">Not read</label>
+                @else
+                <label class="label" style="color:#00d25b;">Read</label>
+                @endif
               </td>
               <td>
+                @if($item->status == 0)
                 <a href="{{url('markRead', $item->id)}}" class="btn btn-warning"
                   onclick="return confirm('Are you sure this feedback is mark read')">Mark Read</a>
                 <button class="btn btn-danger">Delete</button>
+                @else
+                <button class="btn btn-success">Read</button>
+                <a href="" class="btn btn-info">Feedback</a>
+                <a onclick="return confirm('Are You Sure to delete this feedback?')"
+                  href="{{url('delete_feedback',$item->id)}}" class="btn btn-danger">Delete</a>
+                @endif
               </td>
             </tr>
             @endforeach
