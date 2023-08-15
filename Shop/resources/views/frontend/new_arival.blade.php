@@ -14,7 +14,7 @@
              <p style="margin-top: 20px;margin-bottom: 30px;">
                Discover our captivating new arrivals—fresh, trendy products that exceed expectations. From fashion-forward apparel to cutting-edge gadgets, our curated collection has something for everyone. Explore and elevate your style today!
              </p>
-             <a href="">
+             <a href="{{url('products')}}">
              Shop Now
              </a>
           </div>

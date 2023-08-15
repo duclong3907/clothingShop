@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Order_detail;
+use App\Models\Feedback;
 use RealRashid\SweetAlert\Facades\Alert;
 use Session;
 use Stripe;
@@ -279,33 +280,48 @@ class HomeController extends Controller
             $totalMoney += $cartItem->total_price;
         }
 
-        $order = new Order();
-        $order->name = $request->name;
-        $order->email = $request->email;
-        $order->phone = $request->phone;
-        $order->address = $request->address;
-        $order->user_id = $userId;
-        $order->total_money = $totalMoney;
-        $order->payment_status= 'Paid';
-        $order->delivery_status= 'processing';
-        $order->save();
+        if($totalMoney>0){
+            $order = new Order();
+            $order->name = $request->name;
+            $order->email = $request->email;
+            $order->phone = $request->phone;
+            $order->address = $request->address;
+            $order->user_id = $userId;
+            $order->total_money = $totalMoney;
+            $order->payment_status= 'Paid';
+            $order->delivery_status= 'processing';
+            $order->save();
 
-        foreach ($cartItems as $cartItem) {
-            $orderDetail = new Order_detail();
-            $orderDetail->order_id = $order->id;
-            $orderDetail->product_id = $cartItem->product_id;
-            $orderDetail->price = $cartItem->price;
-            $orderDetail->num = $cartItem->quantity;
-            $orderDetail->total_money = $cartItem->total_price;
-            $orderDetail->save();
+            foreach ($cartItems as $cartItem) {
+                $orderDetail = new Order_detail();
+                $orderDetail->order_id = $order->id;
+                $orderDetail->product_id = $cartItem->product_id;
+                $orderDetail->price = $cartItem->price;
+                $orderDetail->num = $cartItem->quantity;
+                $orderDetail->total_money = $cartItem->total_price;
+                $orderDetail->save();
+            }
+        
+            // Xóa giỏ hàng của người dùng sau khi đã đặt hàng
+            cart::where('user_id', '=', $userId)->delete();
+            Alert::success('Payment Successfully', 'You have successfully paid, your order will be delivered as soon as possible');
+            Session::flash('success', 'Payment successful!');
         }
-      
-        // Xóa giỏ hàng của người dùng sau khi đã đặt hàng
-        cart::where('user_id', '=', $userId)->delete();
-        Alert::success('Payment Successfully', 'You have successfully paid, your order will be delivered as soon as possible');
-        Session::flash('success', 'Payment successful!');
               
         return back();
+    }
+
+    public function contact(){
+        if(Auth::id()){
+            $data = feedback::all();
+            $cartNum = $this->getCartNum();
+            return view('frontend.contact', compact('data','cartNum'));
+        }else{
+            return redirect('login');
+        }
+
+        $data = feedback::all();
+        return view('frontend.contact', compact('data'));
     }
 
 }

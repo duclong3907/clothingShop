@@ -55,4 +55,6 @@ route::get('/stripe/{totalmoney}',[HomeController::class, 'stripe']);
 
 Route::post('stripe/{totalmoney}', [HomeController::class, 'stripePost'])->name('stripe.post');
 
+route::get('/contact',[HomeController::class, 'contact']);
+
 
