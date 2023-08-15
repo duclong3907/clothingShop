@@ -324,4 +324,22 @@ class HomeController extends Controller
         return view('frontend.contact', compact('data'));
     }
 
+    public function add_feedback(Request $request){
+        if(Auth::id()){
+            $data = new Feedback();
+            $data ->fullname =$request->fullname;
+            $data ->email =$request->email;
+            $data ->phone =$request->phone;
+            $data ->subject_name =$request->subject_name;
+            $data ->note =$request->note;
+    
+            $data->save();
+            Alert::success('Contact Successfully', 'Thank you for contacting us. We will reply as soon as possible.');
+    
+            return redirect()->back();
+        } else{
+            return redirect('login');
+        }
+    }
+
 }

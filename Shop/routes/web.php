@@ -57,4 +57,6 @@ Route::post('stripe/{totalmoney}', [HomeController::class, 'stripePost'])->name(
 
 route::get('/contact',[HomeController::class, 'contact']);
 
+route::post('/add_feedback',[HomeController::class, 'add_feedback']);
+
 

@@ -107,6 +107,7 @@ $userId = Auth::id();
 </head>
 
 <body>
+@include('sweetalert::alert')
    <div class="hero_area">
       @include('frontend.header')
 
@@ -130,7 +131,7 @@ $userId = Auth::id();
             <div class="row">
                <div class="col-lg-8 offset-lg-2">
                   <!-- <div class="full"> -->
-                  <form action="" method="">
+                  <form action="{{url('add_feedback')}}" method="POST">
                      @csrf
                      <input type="text" placeholder="Enter full name" name="fullname" required id="fullname"
                         value="{{Auth::user()->name}}" />
