@@ -27,4 +27,10 @@ class FeedbackController extends Controller
         $feedback ->delete();
         return redirect()->back()->with('message', 'Feedback deleted successfully');
     }
+
+    public function send_email( $id){
+        $contact= feedback::find($id);
+
+        return view('admin.email_info', compact('contact'));
+    }
 }

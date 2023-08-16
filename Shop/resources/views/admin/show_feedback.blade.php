@@ -73,7 +73,7 @@ $index=0;
                 <button class="btn btn-danger">Delete</button>
                 @else
                 <button class="btn btn-success">Read</button>
-                <a href="" class="btn btn-info">Feedback</a>
+                <a href="{{url('send_email',$item->id)}}" class="btn btn-info">Feedback</a>
                 <a onclick="return confirm('Are You Sure to delete this feedback?')"
                   href="{{url('delete_feedback',$item->id)}}" class="btn btn-danger">Delete</a>
                 @endif
