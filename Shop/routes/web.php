@@ -28,7 +28,7 @@ Route::middleware([
     })->name('dashboard');
 });
 
-route::get('/redirect',[HomeController::class, 'redirect']);
+route::get('/redirect',[HomeController::class, 'redirect'])->middleware('auth','verified');
 
 // customer interface
 route::get('/products',[HomeController::class, 'products']);
