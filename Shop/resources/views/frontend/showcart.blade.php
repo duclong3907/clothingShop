@@ -273,6 +273,12 @@ $totalmoney=0;
                             <div class="col" style="font-weight:800;">TOTAL PRICE</div>
                             <div>{{ number_format($totalmoney)}} VNDC</div>
                         </div>
+                        <input type="text" name="greeting" class="form-control" hidden value="{{$user->name}}">
+                        <input type="text" name="firstline" class="form-control" hidden value="Products: {{$cartNum}}">
+                        <input type="text" name="body" class="form-control" hidden value="Total Money: {{ number_format($totalmoney)}} VND">
+                        <input type="text" name="lastline" class="form-control" hidden value="Payment status: Cash on Delivery">
+                        <input type="text" name="button" class="form-control" hidden value="Continue to buy">
+                        <input type="text" name="url" class="form-control" hidden value="http://127.0.0.1:8000/">
                         <input type="submit" value="CHECKOUT" class="btnSubmit"></input>
                     </form>
                 </div>

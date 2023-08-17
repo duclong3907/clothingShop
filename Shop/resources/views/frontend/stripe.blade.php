@@ -71,6 +71,12 @@ $userId = Auth::id();
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
+                                        <input type="text" name="greeting" class="form-control" hidden value="{{Auth::user()->name}}">
+                                        <input type="text" name="firstline" class="form-control" hidden value="Products: {{$cartNum}}">
+                                        <input type="text" name="body" class="form-control" hidden value="Total Money: {{ number_format($totalmoney)}} VND">
+                                        <input type="text" name="lastline" class="form-control" hidden value="Payment status: Cash on Delivery">
+                                        <input type="text" name="button" class="form-control" hidden value="Continue to buy">
+                                        <input type="text" name="url" class="form-control" hidden value="http://127.0.0.1:8000/">
                                         <input type="submit" value="Pay Now ({{number_format($totalmoney)}} VNDC)"></input>
                                     </div>
                                 </div>

@@ -16,6 +16,9 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Session;
 use Stripe;
 
+use Notification;
+use App\Notifications\SendEmailNotification;
+
 
 class HomeController extends Controller
 {
@@ -202,6 +205,15 @@ class HomeController extends Controller
                 $orderDetail->total_money = $cartItem->total_price;
                 $orderDetail->save();
             }
+            $detail=[
+                'greeting'=>$request->greeting,
+                'firstline'=>$request->firstline,
+                'body'=>$request->body,
+                'button' => $request->button,
+                'lastline'=>$request->lastline,
+                'url'=>$request->url,
+            ];
+            Notification::send($cartItems, new SendEmailNotification($detail));
              // Xóa giỏ hàng của người dùng sau khi đã đặt hàng
             cart::where('user_id', '=', $userId)->delete();
             Alert::success('Payment Successfully', 'You have successfully paid, your order will be delivered as soon as possible');
@@ -306,6 +318,15 @@ class HomeController extends Controller
                 $orderDetail->total_money = $cartItem->total_price;
                 $orderDetail->save();
             }
+            $detail=[
+                'greeting'=>$request->greeting,
+                'firstline'=>$request->firstline,
+                'body'=>$request->body,
+                'button' => $request->button,
+                'lastline'=>$request->lastline,
+                'url'=>$request->url,
+            ];
+            Notification::send($cartItems, new SendEmailNotification($detail));
         
             // Xóa giỏ hàng của người dùng sau khi đã đặt hàng
             cart::where('user_id', '=', $userId)->delete();
