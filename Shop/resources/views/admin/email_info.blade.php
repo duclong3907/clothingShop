@@ -55,7 +55,7 @@ $search='';
         </div>
         <div class="row">
           <div class="col-md-8 mx-auto">
-            <form action="" method="POST">
+            <form action="{{url('send_user_email',$contact->id)}}" method="POST">
               @csrf
               <div class="card">
                 <div class="card-body">

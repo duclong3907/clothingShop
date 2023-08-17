@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Feedback;
 
+use Notification;
+use App\Notifications\SendEmailNotification;
+
 class FeedbackController extends Controller
 {
     public function show_feedback(){
@@ -32,5 +35,22 @@ class FeedbackController extends Controller
         $contact= feedback::find($id);
 
         return view('admin.email_info', compact('contact'));
+    }
+
+    public function send_user_email(Request $request, $id){
+        $contact = feedback::find($id);
+
+        $detail=[
+            'greeting'=>$request->greeting,
+            'firstline'=>$request->firstline,
+            'body'=>$request->body,
+            'button' => $request->button,
+            'lastline'=>$request->lastline,
+            'url'=>$request->url,
+        ];
+
+        Notification::send($contact, new SendEmailNotification($detail));
+
+        return redirect()->back()->with('message', 'Email sent successfully');
     }
 }
