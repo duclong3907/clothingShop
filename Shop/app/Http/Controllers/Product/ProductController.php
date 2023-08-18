@@ -9,6 +9,12 @@ use App\Models\Category;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('checkPermission');
+    }
+    
     public function show_product(){
 
         $product = product ::leftJoin('categories', 'categories.id', '=', 'products.category_id')

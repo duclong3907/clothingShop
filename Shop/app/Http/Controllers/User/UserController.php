@@ -10,6 +10,11 @@ use App\Models\Role;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('checkPermission');
+    }
     public function show_user(){
         $dataList = User::leftJoin('roles', 'roles.id', '=', 'users.usertype')
         ->select('users.*', 'roles.name as role_name')

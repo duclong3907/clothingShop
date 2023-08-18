@@ -11,6 +11,12 @@ use App\Notifications\SendEmailNotification;
 
 class FeedbackController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('checkPermission');
+    }
+    
     public function show_feedback(){
         $dataList=feedback::all();
         return view('admin.show_feedback', compact('dataList'));

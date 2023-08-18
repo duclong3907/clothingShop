@@ -9,6 +9,12 @@ use App\Models\Product;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('checkPermission');
+    }
+    
     public function view_category(Request $request){
         $data = category::all();
         $id = $request->id;

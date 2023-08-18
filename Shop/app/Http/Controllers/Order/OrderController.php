@@ -12,6 +12,12 @@ use PDF;
 
 class OrderController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('checkPermission');
+    }
+    
     public function order(){
         $order = Order::all();
         return view('admin.order', compact('order'));
