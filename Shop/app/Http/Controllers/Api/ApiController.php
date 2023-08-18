@@ -9,53 +9,56 @@ class ApiController extends Controller
 {
     public function uploadFile(Request $request) {
         $target_dir = "uploads/";
-        $target_file = $target_dir . basename($_FILES["file"]["name"]);
+        $target_file = public_path($target_dir . basename($_FILES["file"]["name"]));
         $uploadOk = 1;
-        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
         // Check if image file is a actual image or fake image
         if(isset($_POST["submit"])) {
-          $check = getimagesize($_FILES["file"]["tmp_name"]);
-          if($check !== false) {
-            $uploadOk = 1;
-          } else {
-            $uploadOk = 0;
-          }
+            $check = getimagesize($_FILES["file"]["tmp_name"]);
+            if($check === false) {
+                $uploadOk = 0;
+            }
         }
 
         // Check if file already exists
         // if (file_exists($target_file)) {
-        //   $uploadOk = 0;
+        //     $uploadOk = 0;
+        //     $message = "File already exists.";
         // }
 
         // Check file size
         if ($_FILES["file"]["size"] > 500000) {
-          $uploadOk = 0;
+            $uploadOk = 0;
+            $message = "File size is too large.";
         }
 
         // Allow certain file formats
-        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-        && $imageFileType != "gif" && $imageFileType != "webp" && $imageFileType != "svg" && $imageFileType != "bmp" ) {
-          $uploadOk = 0;
+        $allowedExtensions = ["jpg", "png", "jpeg", "gif", "webp", "svg", "bmp"];
+        if(!in_array($imageFileType, $allowedExtensions)) {
+            $uploadOk = 0;
+            $message = "Invalid file format.";
         }
 
         // Check if $uploadOk is set to 0 by an error
         if ($uploadOk == 0) {
-        // if everything is ok, try to upload file
-        } else {
-          if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
-            $url = url('/').'/'.$target_dir.htmlspecialchars( basename( $_FILES["file"]["name"]));
             return json_encode([
-                'status' => 1,
-                'url' => $url
+                'status' => 0,
+                'message' => $message ?? 'Error'
             ]);
-          } else {
-          }
+        } else {
+            if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
+                $url = asset($target_dir . basename($_FILES["file"]["name"]));
+                return json_encode([
+                    'status' => 1,
+                    'url' => $url
+                ]);
+            } else {
+                return json_encode([
+                    'status' => 0,
+                    'message' => 'Error uploading file.'
+                ]);
+            }
         }
-
-        return json_encode([
-            'status' => 0,
-            'url' => 'Error'
-        ]);
     }
 }

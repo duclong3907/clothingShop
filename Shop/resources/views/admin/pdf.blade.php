@@ -45,7 +45,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Order PDF</h1>
+        <h1>Order {{$order->id}}</h1>
         <table>
             <tr>
                 <th>Full Name</th>
