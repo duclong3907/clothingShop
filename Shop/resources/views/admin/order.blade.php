@@ -63,12 +63,14 @@ $index=0;
                     <a href="{{url('delivered', $item->id)}}" onclick="return confirm('Are you sure this order is delivered')"><button class="btn btn-primary">Delivery</button></a>
                     <a href="{{url('order_detail',$item->id)}}"><button class="btn btn-info">Details</button></a>
                     <a href="{{url('delete_order',$item->id)}}" class="btn btn-danger" onclick="return  confirm('Are you sure to delete this order')">Delete</a>
+                    <a href="{{url('print_pdf',$item->id)}}" class="btn btn-secondary"><i class="bi bi-download"></i></a>
                 </td>
             @else
                 <td style="color: green;">{{ $item->delivery_status }}</td>
                 <td>
                     <a href="{{url('order_detail',$item->id)}}"><button class="btn btn-info">Details</button></a>
                     <a href="{{url('delete_order',$item->id)}}" class="btn btn-danger" onclick="return  confirm('Are you sure to delete this order')">Delete</a>
+                    <a href="{{url('print_pdf',$item->id)}}" class="btn btn-secondary"><i class="bi bi-download"></i></a>
                 </td>
             @endif
             </tr>

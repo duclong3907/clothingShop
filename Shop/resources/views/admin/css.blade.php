@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="themes/admin/assets/vendors/flag-icon-css/css/flag-icon.min.css">
     <link rel="stylesheet" href="themes/admin/assets/vendors/owl-carousel-2/owl.carousel.min.css">
     <link rel="stylesheet" href="themes/admin/assets/vendors/owl-carousel-2/owl.theme.default.min.css">
+    <!-- icon boostrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <!-- endinject -->

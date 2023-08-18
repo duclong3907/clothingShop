@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Order_detail;   
+use PDF;
+
 
 
 class OrderController extends Controller
@@ -50,5 +52,19 @@ class OrderController extends Controller
             ->get();
             
             return view('admin.order_detail', compact('orderId', 'itemList'));
+    }
+
+    public function print_pdf($id){
+        $order = order::find($id);
+        $order_detail = Order_detail::leftJoin('products', 'products.id', '=', 'order_details.product_id')
+        ->where('order_details.order_id', $order->id)
+        ->select('order_details.*', 'products.title', 'products.image')
+        ->get();
+        // dd($order_detail);
+        $name = $order->name;
+
+        $pdf = PDF::loadView('admin.pdf',compact('order','order_detail'));
+
+        return $pdf->download('Order-'.$order->id.'.pdf');
     }
 }
