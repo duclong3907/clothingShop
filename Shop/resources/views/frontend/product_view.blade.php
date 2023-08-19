@@ -1,7 +1,10 @@
 <section class="product_section">
          <div class="container">
+            <form action="{{url('search_product')}}" style="text-align: center;">
+               <input type="text" name="search" placeholder="Search for something" style="width:50%;">
+            </form>
             <div class="row">
-               @foreach($product as $product)
+               @foreach($products as $product)
                <div class="col-sm-6 col-md-4 col-lg-4">
                   <div class="box">
                      <div class="option_container">
@@ -47,6 +50,9 @@
                </div>
                @endforeach
 
+            </div>
+            <div class="pagination justify-content-center">
+               {{ $products->links() }}
             </div>
          </div>
       </section>

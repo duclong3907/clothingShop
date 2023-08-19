@@ -127,7 +127,7 @@ $index1=$index2=$index3=$index4=$index5=0;
                             <div class="col">
                                 <h4><b>My Cart</b></h4>
                             </div>
-                            <div class="col align-self-center text-right text-muted">{{$cartNum}} Products</div>
+                            <div class="col align-self-center text-right text-muted">{{$order->count()}} Orders</div>
                         </div>
                     </div>
                     @if(session()->has('message'))

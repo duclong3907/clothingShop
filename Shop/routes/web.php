@@ -63,4 +63,7 @@ route::get('/view_profile/{id}',[HomeController::class, 'view_profile']);
 
 route::post('/edit_profile',[HomeController::class, 'edit_profile']);
 
+route::get('/product_search',[HomeController::class, 'product_search']);
+
+route::get('/search_product',[HomeController::class, 'search_product']);
 

@@ -49,10 +49,10 @@ class HomeController extends Controller
 
     //Show product view
     public function products(){
-        $product = Product::all()->where('deleted', 0);
+        $products = Product::where('deleted', 0)->paginate(6);
 
         $cartNum = $this->getCartNum();
-        return view('frontend.all_product',compact('product','cartNum'));
+        return view('frontend.all_product',compact('products','cartNum'));
    }
 
     //show product details
@@ -391,4 +391,26 @@ class HomeController extends Controller
             Alert::success('Update successfully', 'You updated your profile!!!');
         return redirect()->back();
    }
+
+   public function product_search(Request $request){
+        $search = $request->search;
+        $cartNum = $this->getCartNum();
+        $products = product::leftjoin('categories','categories.id','=','products.category_id')
+                ->where('deleted',0)
+                ->where('products.title', 'like', "%$search%")->orwhere('categories.name', 'like', "%$search%")
+                ->paginate(9);
+
+        return view('frontend.userpage', compact('products','cartNum'));
+    }
+
+    public function search_product(Request $request){
+        $search = $request->search;
+        $cartNum = $this->getCartNum();
+        $products = product::leftjoin('categories','categories.id','=','products.category_id')
+                    ->where('deleted',0)
+                    ->where('products.title', 'like', "%$search%")->orwhere('categories.name', 'like', "%$search%")
+                    ->paginate(9);
+        
+        return view('frontend.all_product', compact('products','cartNum'));
+    }
 }

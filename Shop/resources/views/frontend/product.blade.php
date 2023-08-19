@@ -5,6 +5,10 @@
             Our <span>products</span>
          </h2>
       </div>
+      <form action="{{url('product_search')}}" style="text-align: center;">
+         <input type="text" name="search" placeholder="Search for something" style="width:50%;">
+         <input type="submit" value="Search">
+      </form>
       <div class="row">
          @foreach($products as $product)
          <div class="col-sm-6 col-md-4 col-lg-4">
@@ -62,8 +66,13 @@
       </div>
    </div>
 </section>
-<style>
-   .pagination p {
-      display: none;
-   }
-</style>
+<script>
+        document.addEventListener("DOMContentLoaded", function(event) { 
+            var scrollpos = localStorage.getItem('scrollpos');
+            if (scrollpos) window.scrollTo(0, scrollpos);
+        });
+
+        window.onbeforeunload = function(e) {
+            localStorage.setItem('scrollpos', window.scrollY);
+        };
+</script>

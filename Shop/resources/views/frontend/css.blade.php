@@ -56,4 +56,8 @@
             text-align: center;
             float: left;
         }
+
+        .pagination p {
+            display: none;
+        }
       </style>
