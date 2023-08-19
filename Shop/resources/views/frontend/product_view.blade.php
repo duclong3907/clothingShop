@@ -9,17 +9,10 @@
                            <a href="{{url('product_details', $product->id)}}" class="option1">
                            {{$product->title}}
                            </a>
-                           
                            <form action="{{url('add_cart', $product->id)}}" method="POST">
                               @csrf
-                              <div class="row">
-                                 <div class="col-md-4">
-                                    <input type="number" name="quantity" value="1" min="1" style="width:100px;">
-                                 </div>
-                                 <div class="col-md-4">
-                                    <input type="submit" value="Buy Now">
-                                 </div>
-                              </div>
+                              <input type="number" name="quantity" value="1" min="1" style="width:100px;" hidden>
+                              <input type="submit" value="Buy Now" class="option2" style="border-radius: 30px;">
                            </form>
                         </div>
                      </div>

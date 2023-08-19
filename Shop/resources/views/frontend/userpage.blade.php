@@ -10,6 +10,8 @@ $title="Home";
 
 <body>
    <div class="hero_area">
+      @include('sweetalert::alert')
+
       <!-- header section strats -->
       @include('frontend.header')
       <!-- end header section -->
@@ -24,7 +26,6 @@ $title="Home";
    <!-- arrival section -->
    @include('frontend.new_arival')
    <!-- end arrival section -->
-
    <!-- product section -->
    @include('frontend.product')
    <!-- end product section -->

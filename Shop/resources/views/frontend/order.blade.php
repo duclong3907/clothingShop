@@ -98,14 +98,19 @@ $index1=$index2=$index3=$index4=$index5=0;
         }
 
         .navtab {
-            min-width: 5rem;
+            min-width: 10rem;
         }
 
         .nav-pills .navtab {
             margin: 0 2rem;
         }
-        thead tr th{
-            background-color:skyblue;
+
+        thead tr th {
+            background-color: skyblue;
+        }
+
+        .navOrder{
+            margin: auto;
         }
     </style>
 </head>
@@ -132,35 +137,42 @@ $index1=$index2=$index3=$index4=$index5=0;
                         {{ session()->get('message') }}
                     </div>
                     @endif
-                    <div class="d-flex justify-content-center">
-                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active navtab" id="pills-all-tab" data-bs-toggle="pill"
-                                    data-bs-target="#pills-all" type="button" role="tab" aria-controls="pills-all"
-                                    aria-selected="true">All</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link navtab" id="pills-wait-tab" data-bs-toggle="pill"
-                                    data-bs-target="#pills-wait" type="button" role="tab" aria-controls="pills-wait"
-                                    aria-selected="false">Wait Payment</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link navtab" id="pills-process-tab" data-bs-toggle="pill"
-                                    data-bs-target="#pills-process" type="button" role="tab"
-                                    aria-controls="pills-process" aria-selected="false">Processing</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link navtab" id="pills-complete-tab" data-bs-toggle="pill"
-                                    data-bs-target="#pills-complete" type="button" role="tab"
-                                    aria-controls="pills-complete" aria-selected="false">Complete</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link navtab" id="pills-cancel-tab" data-bs-toggle="pill"
-                                    data-bs-target="#pills-cancel" type="button" role="tab" aria-controls="pills-cancel"
-                                    aria-selected="false">Cancel</button>
-                            </li>
-                        </ul>
+                    <div class="navbar navbar-expand-lg custom_nav-container ">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class=""></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav nav nav-pills mb-3 navOrder" id="pills-tab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active navtab" id="pills-all-tab" data-bs-toggle="pill"
+                                        data-bs-target="#pills-all" type="button" role="tab" aria-controls="pills-all"
+                                        aria-selected="true">All</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link navtab" id="pills-wait-tab" data-bs-toggle="pill"
+                                        data-bs-target="#pills-wait" type="button" role="tab" aria-controls="pills-wait"
+                                        aria-selected="false">Pending</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link navtab" id="pills-process-tab" data-bs-toggle="pill"
+                                        data-bs-target="#pills-process" type="button" role="tab"
+                                        aria-controls="pills-process" aria-selected="false">Processing</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link navtab" id="pills-complete-tab" data-bs-toggle="pill"
+                                        data-bs-target="#pills-complete" type="button" role="tab"
+                                        aria-controls="pills-complete" aria-selected="false">Complete</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link navtab" id="pills-cancel-tab" data-bs-toggle="pill"
+                                        data-bs-target="#pills-cancel" type="button" role="tab"
+                                        aria-controls="pills-cancel" aria-selected="false">Cancel</button>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
+
 
                     <div class="tab-content" id="pills-tabContent">
                         <div class="tab-pane fade show active" id="pills-all" role="tabpanel"
@@ -194,11 +206,13 @@ $index1=$index2=$index3=$index4=$index5=0;
                                             <td>{{$orderAll->delivery_status}}</td>
                                             @if ($orderAll->delivery_status=='processing')
                                             <td><a href="{{url('cancel_order', $orderAll->id)}}" class="btn btn-warning"
-                                                    onclick="return confirm('Are you sure to cancel this order!')"><i class="bi bi-x-octagon"></i> Cancel</a>
+                                                    onclick="return confirm('Are you sure to cancel this order!')"><i
+                                                        class="bi bi-x-octagon"></i> Cancel</a>
                                             </td>
                                             @else
                                             <td><a href="{{url('delete_orders', $orderAll->id)}}" class="btn btn-danger"
-                                                    onclick="return confirm('Are you sure to delete this order!')"><i class="bi bi-trash"></i> Delete</a>
+                                                    onclick="return confirm('Are you sure to delete this order!')"><i
+                                                        class="bi bi-trash"></i> Delete</a>
                                             </td>
                                             @endif
                                         </tr>
@@ -243,7 +257,8 @@ $index1=$index2=$index3=$index4=$index5=0;
                                             <td>{{$wait->payment_status}}</td>
                                             <td>{{$wait->delivery_status}}</td>
                                             <td><a href="{{url('cancel_order', $orderAll->id)}}" class="btn btn-warning"
-                                                    onclick="return confirm('Are you sure to cancel this order!')"><i class="bi bi-x-octagon"></i> Cancel</a>
+                                                    onclick="return confirm('Are you sure to cancel this order!')"><i
+                                                        class="bi bi-x-octagon"></i> Cancel</a>
                                             </td>
                                             <?php $index2++?>
                                             @endif
@@ -289,7 +304,8 @@ $index1=$index2=$index3=$index4=$index5=0;
                                             <td>{{$process->payment_status}}</td>
                                             <td>{{$process->delivery_status}}</td>
                                             <td><a href="{{url('cancel_order', $orderAll->id)}}" class="btn btn-warning"
-                                                    onclick="return confirm('Are you sure to cancel this order!')"><i class="bi bi-x-octagon"></i> Cancel</a>
+                                                    onclick="return confirm('Are you sure to cancel this order!')"><i
+                                                        class="bi bi-x-octagon"></i> Cancel</a>
                                             </td>
                                             <?php $index3++?>
                                             @endif
@@ -336,10 +352,11 @@ $index1=$index2=$index3=$index4=$index5=0;
                                             <td>{{$complete->payment_status}}</td>
                                             <td>{{$complete->delivery_status}}</td>
                                             <td><a href="{{url('delete_orders', $orderAll->id)}}" class="btn btn-danger"
-                                                    onclick="return confirm('Are you sure to delete this order!')"><i class="bi bi-trash"></i> Delete</a>
+                                                    onclick="return confirm('Are you sure to delete this order!')"><i
+                                                        class="bi bi-trash"></i> Delete</a>
                                             </td>
                                             <?php $index4++?>
-                                        @endif
+                                            @endif
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -382,7 +399,8 @@ $index1=$index2=$index3=$index4=$index5=0;
                                             <td>{{$cancel->payment_status}}</td>
                                             <td>{{$cancel->delivery_status}}</td>
                                             <td><a href="{{url('delete_orders', $orderAll->id)}}" class="btn btn-danger"
-                                                    onclick="return confirm('Are you sure to delete this order!')"><i class="bi bi-trash"></i> Delete</a>
+                                                    onclick="return confirm('Are you sure to delete this order!')"><i
+                                                        class="bi bi-trash"></i> Delete</a>
                                             </td>
                                             <?php $index5++?>
                                             @endif

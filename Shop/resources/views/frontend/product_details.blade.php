@@ -120,9 +120,11 @@ $title="Detail";
                            <a href="{{url('product_details', $item->id)}}" class="option1">
                               {{ $item->title }}
                            </a>
-                           <a href="" class="option2">
-                              Buy Now
-                           </a>
+                           <form action="{{url('add_cart', $item->id)}}" method="POST">
+                              @csrf
+                                    <input type="number" name="quantity" value="1" min="1" style="width:100px;" hidden>
+                                    <input type="submit" value="Buy Now" class="option2" style="border-radius: 30px;">
+                           </form>
                         </div>
                      </div>
                      <div>
@@ -151,8 +153,6 @@ $title="Detail";
 </body>
 
 <script type="text/javascript">
-
-
    function addToCart() {
       Swal.fire({
         icon: 'success',
@@ -172,14 +172,13 @@ $title="Detail";
 
    }
 
-
-
    function addMoreCart(delta) {
       num = parseInt($('[name=quantity]').val())
       num += delta;
       if (num < 1) num = 1
       $('[name=quantity]').val(num);
    }
+
    function fixCartNum() {
       $('[name=quantity]').val(Math.abs($('[name=quantity]').val()));
    }

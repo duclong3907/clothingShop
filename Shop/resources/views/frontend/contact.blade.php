@@ -174,7 +174,7 @@ $title="Contact";
                      fashion-forward apparel to cutting-edge gadgets, our curated collection has something for everyone.
                      Explore and elevate your style today!
                   </p>
-                  <a href="">
+                  <a href="{{url('products')}}">
                      Shop Now
                   </a>
                </div>
