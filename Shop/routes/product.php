@@ -11,6 +11,8 @@ route::post('/add_product',[ProductController::class, 'add_product']);
 
 route::get('/delete_product/{id}',[ProductController::class, 'delete_product']);
 
+route::get('/searchProduct',[ProductController::class, 'searchProduct']);
+
 
 
 

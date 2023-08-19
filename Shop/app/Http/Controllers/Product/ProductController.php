@@ -77,5 +77,16 @@ class ProductController extends Controller
         return redirect()->back()->with('message', 'Product deleted successfully');
     }
 
+    public function searchProduct(Request $request){
+        $searchText = $request->search;
+
+        $product = product::leftjoin('categories', 'categories.id','=', 'products.category_id')
+                    ->where('products.deleted',0)
+                    ->where('products.title', 'LIKE',"%$searchText%")->orwhere('products.quantity', 'LIKE',"%$searchText%")
+                    ->orwhere('categories.name', 'LIKE',"%$searchText%")->orwhere('products.price', 'LIKE',"%$searchText%")
+                    ->select('products.*', 'categories.name as category')
+                    ->get();
+        return view('admin.show_product',compact('product'));
+    }
 
 }

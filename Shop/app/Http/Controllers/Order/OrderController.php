@@ -73,4 +73,14 @@ class OrderController extends Controller
 
         return $pdf->download('Order-'.$order->id.'.pdf');
     }
+
+    public function searchOrder(Request $request){
+        $searchText = $request->search;
+        $order = order::where('name', 'LIKE',"%$searchText%")->orwhere('email', 'LIKE',"%$searchText%")
+                    ->orwhere('phone', 'LIKE',"%$searchText%")->orwhere('address', 'LIKE',"%$searchText%")
+                    ->orwhere('payment_status', 'LIKE',"%$searchText%")
+                    ->orwhere('delivery_status', 'LIKE',"%$searchText%")->get();
+
+        return view('admin.order',compact('order'));
+    }
 }

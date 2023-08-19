@@ -11,3 +11,5 @@ route::get('/delete_feedback/{id}',[FeedbackController::class, 'delete_feedback'
 route::get('/send_email/{id}',[FeedbackController::class, 'send_email']);
 
 route::post('/send_user_email/{id}',[FeedbackController::class, 'send_user_email']);
+
+route::get('/searchFeedback',[FeedbackController::class, 'searchFeedback']);

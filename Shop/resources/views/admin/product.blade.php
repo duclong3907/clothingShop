@@ -1,6 +1,7 @@
 @php
 $title = "Product";
 $index=0;
+$search="searchProduct";
 @endphp
 <!DOCTYPE html>
 <html lang="en">

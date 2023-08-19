@@ -59,4 +59,12 @@ class FeedbackController extends Controller
 
         return redirect()->back()->with('message', 'Email sent successfully');
     }
+
+    public function searchFeedback(Request $request){
+        $searchText = $request->search;
+        $dataList = feedback::where('fullname', 'LIKE',"%$searchText%")->orwhere('email', 'LIKE',"%$searchText%")
+                    ->orwhere('phone', 'LIKE',"%$searchText%")->orwhere('subject_name', 'LIKE',"%$searchText%")->get();
+
+        return view('admin.show_feedback',compact('dataList'));
+    }
 }

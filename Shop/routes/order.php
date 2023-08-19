@@ -12,3 +12,5 @@ route::get('/delivered/{id}',[OrderController::class, 'delivered']);
 route::get('/order_detail/{id}',[OrderController::class, 'order_detail']);
 
 route::get('/print_pdf/{id}',[OrderController::class, 'print_pdf']);
+
+route::get('/searchOrder',[OrderController::class, 'searchOrder']);

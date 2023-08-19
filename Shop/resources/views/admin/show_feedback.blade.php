@@ -1,6 +1,7 @@
 @php
 $title = "FeedBack";
 $index=0;
+$search="searchFeedback";
 @endphp
 <!DOCTYPE html>
 <html lang="en">

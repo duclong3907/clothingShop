@@ -87,4 +87,12 @@ class UserController extends Controller
         return redirect()->back()->with('message', 'User deleted successfully');
     }
 
+    public function searchUser(Request $request){
+        $searchText = $request->search;
+        $dataList = user::where('name', 'LIKE',"%$searchText%")->orwhere('email', 'LIKE',"%$searchText%")
+                    ->orwhere('phone', 'LIKE',"%$searchText%")->orwhere('address', 'LIKE',"%$searchText%")->get();
+
+        return view('admin.show_user',compact('dataList'));
+    }
+
 }

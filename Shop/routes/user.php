@@ -11,3 +11,5 @@ route::get('/view_user',[UserController::class, 'view_user']);
 route::post('/add_user',[UserController::class, 'add_user']);
 
 route::get('/delete_user/{id}',[UserController::class, 'delete_user']);
+
+route::get('/searchUser',[UserController::class, 'searchUser']);
