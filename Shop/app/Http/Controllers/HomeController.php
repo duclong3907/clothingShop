@@ -370,4 +370,25 @@ class HomeController extends Controller
         }
     }
 
+    public function view_profile($id){
+        $user = user::find($id);
+        $cartNum = $this->getCartNum();
+        return view('frontend.profile', compact('user','cartNum'));
+   }
+
+   public function edit_profile(Request $request){
+    $userId = Auth::id();
+        $user = User::find($userId);
+        $user->name = $request->name;
+        $user->image = $request->image;
+            $user->email = $request->email;
+            $user->phone = $request->phone;
+            $user->address = $request->address;
+            if ($request->has('password') && $request->password !== '') {
+                $user->password = Hash::make($request->password);
+            }
+            $user->save();
+            Alert::success('Update successfully', 'You updated your profile!!!');
+        return redirect()->back();
+   }
 }

@@ -1,6 +1,5 @@
 @php
 $title="Contact";
-$userId = Auth::id();
 @endphp
 <!DOCTYPE html>
 <html>

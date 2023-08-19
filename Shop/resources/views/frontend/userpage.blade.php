@@ -1,6 +1,5 @@
 @php
 $title="Home";
-
 @endphp
 <!DOCTYPE html>
 <html>

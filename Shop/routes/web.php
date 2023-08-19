@@ -59,4 +59,8 @@ route::get('/contact',[HomeController::class, 'contact']);
 
 route::post('/add_feedback',[HomeController::class, 'add_feedback']);
 
+route::get('/view_profile/{id}',[HomeController::class, 'view_profile']);
+
+route::post('/edit_profile',[HomeController::class, 'edit_profile']);
+
 

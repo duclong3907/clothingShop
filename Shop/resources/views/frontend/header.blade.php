@@ -26,7 +26,7 @@
                            @if (Route::has('login'))
 
                            @auth
-                              <li><a href="">Profile</a></li>
+                              <li><a href="{{url('view_profile', Auth::id())}}">Profile</a></li>
                               <li>
                                  <form action="{{ route('logout') }}" method="POST">
                                     @csrf
