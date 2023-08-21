@@ -147,6 +147,9 @@ $title="Detail";
    </div>
 
    <!-- end client section -->
+   <!-- comment section -->
+   @include('frontend.comment_reply')
+   <!-- end comment section -->
    <!-- footer start -->
    @include('frontend.footer')
    <!-- footer end -->

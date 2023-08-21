@@ -12,6 +12,7 @@ use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Order_detail;
 use App\Models\Feedback;
+use App\Models\Comment;
 use RealRashid\SweetAlert\Facades\Alert;
 use Session;
 use Stripe;
@@ -63,7 +64,11 @@ class HomeController extends Controller
                         ->paginate(3);
 
         $cartNum = $this->getCartNum();
-        return view('frontend.product_details', compact('product', 'productList','cartNum'));
+        $comment = Comment::leftjoin('users','users.id','=','comments.user_id')
+                        ->where('product_id', $id)
+                        ->orderby('id', 'desc')
+                        ->select('users.image','comments.*')->get();
+        return view('frontend.product_details', compact('product', 'productList','cartNum','comment'));
     }
 
     public function add_cart(Request $request, $id){
@@ -412,5 +417,22 @@ class HomeController extends Controller
                     ->paginate(9);
         
         return view('frontend.all_product', compact('products','cartNum'));
+    }
+
+    public function add_comment(Request $request, $id){
+        if(Auth::id()){
+            $comment = new Comment();
+            $comment->name= Auth::user()->name;
+            $comment->user_id = Auth::user()->id;
+            $comment->comment=$request->comment;
+            $comment->product_id = $id;
+            $comment->save();
+    
+            return redirect()->back();
+    
+        } else{
+    
+            return redirect('login');
+        }
     }
 }
