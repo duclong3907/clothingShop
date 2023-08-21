@@ -37,8 +37,31 @@ class HomeController extends Controller
         $usertype=Auth::user()->usertype;
         
         if($usertype == '1'){
+            $total_product = product::all()->count();
+            $total_order = order::all()->count();
+            $total_user = user::all()->count();
+            $order = order::all();
+            $product = Product::where('deleted', 0)->get();
+            $discount = $price = $total_revenue=0;
+            foreach($product as $product){
+                $discount = round(($discount+$product->discount_price)/23000, 2);
+                $price = round(($price+$product->price)/23000, 2);
+            }
 
-            return view('admin.home');
+            foreach($order as $order){
+                $total_revenue = round(($total_revenue+$order->total_money)/23000, 2);
+            }
+            $order_items = Order::leftJoin('users', 'users.id', '=', 'orders.user_id')
+            ->select('orders.*', 'users.image')
+            ->orderBy('orders.created_at', 'DESC')
+            ->paginate(5);
+
+            $messages= feedback::leftjoin('users', 'users.id','=', 'feedback.user_id')
+            ->select('feedback.*', 'users.image')->paginate(4);
+
+            $total_feedback = feedback::all()->count();
+            // dd($itemList);
+            return view('admin.home',compact('total_product','total_order','total_user','total_revenue','total_feedback','discount','price','messages','order_items'));
         } else{
             $products = Product::where('deleted', 0)
                         ->paginate(6);
@@ -370,6 +393,7 @@ class HomeController extends Controller
             $data ->phone =$request->phone;
             $data ->subject_name =$request->subject_name;
             $data ->note =$request->note;
+            $data->user_id = Auth::id();
     
             $data->save();
             Alert::success('Contact Successfully', 'Thank you for contacting us. We will reply as soon as possible.');

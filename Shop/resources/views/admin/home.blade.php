@@ -1,6 +1,7 @@
 @php
 $title="Admin";
 $search="";
+$index=3;
 @endphp
 <!DOCTYPE html>
 <html lang="en">
