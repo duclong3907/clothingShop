@@ -13,6 +13,7 @@ use App\Models\Order;
 use App\Models\Order_detail;
 use App\Models\Feedback;
 use App\Models\Comment;
+use App\Models\Reply;
 use RealRashid\SweetAlert\Facades\Alert;
 use Session;
 use Stripe;
@@ -68,7 +69,12 @@ class HomeController extends Controller
                         ->where('product_id', $id)
                         ->orderby('id', 'desc')
                         ->select('users.image','comments.*')->get();
-        return view('frontend.product_details', compact('product', 'productList','cartNum','comment'));
+
+        $reply = reply::leftjoin('comments', 'comments.id','=','replies.comment_id')
+                        ->leftjoin('users','users.id','=','replies.user_id')
+                        ->orderby('id', 'desc')
+                        ->select('replies.*','users.image')->get();
+        return view('frontend.product_details', compact('product', 'productList','cartNum','comment','reply'));
     }
 
     public function add_cart(Request $request, $id){
@@ -258,24 +264,23 @@ class HomeController extends Controller
    }    
 
    public function delete_orders($id){
-    $order = order::find($id);
-    $order_id = $order -> id;
+        $order = order::find($id);
+        $order_id = $order -> id;
 
-    $order_details = Order_detail::where('order_id', $order_id)->get();
+        $order_details = Order_detail::where('order_id', $order_id)->get();
 
-    foreach ($order_details as $detail) {
-        $detail->deleted = 1;
-        $detail->save();
-    }
+        foreach ($order_details as $detail) {
+            $detail->deleted = 1;
+            $detail->save();
+        }
 
-    return redirect()->back()->with('message', 'Order deleted successfully');
+        return redirect()->back()->with('message', 'Order deleted successfully');
     
    }
 
    public function stripe($totalmoney){
-    $cartNum = $this->getCartNum();
-
-    return view('frontend.stripe', compact('totalmoney','cartNum'));
+        $cartNum = $this->getCartNum();
+        return view('frontend.stripe', compact('totalmoney','cartNum'));
     }   
 
     public function stripePost(Request $request, $totalmoney)
@@ -432,6 +437,25 @@ class HomeController extends Controller
     
         } else{
     
+            return redirect('login');
+        }
+    }
+
+    public function add_reply(Request $request){
+        if(Auth::id()){
+            $reply = new Reply();
+    
+            $reply->name= Auth::user()->name;
+    
+            $reply->user_id = Auth::user()->id;
+    
+            $reply->comment_id=$request->commentId;
+    
+            $reply->reply=$request->reply;
+            $reply->save();
+    
+            return redirect()->back();
+        } else{
             return redirect('login');
         }
     }
