@@ -6,13 +6,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
+use App\Http\Controllers\HomeController;
 
 class CategoryController extends Controller
 {
-    public function __construct()
+    protected $homeController;
+    public function __construct(HomeController $homeController)
     {
         $this->middleware('auth');
         $this->middleware('checkPermission');
+        $this->homeController = $homeController;
     }
     
     public function view_category(Request $request){
@@ -26,8 +29,10 @@ class CategoryController extends Controller
                 $name = $item->name;
             }
         }
+        $total_feedback = $this->homeController->total_feedback();
+        $messages= $this->homeController->message();
 
-        return view('admin.category', compact('data','id','name'));
+        return view('admin.category', compact('data','id','name','total_feedback','messages'));
     }
 
     public function add_category(Request $request){

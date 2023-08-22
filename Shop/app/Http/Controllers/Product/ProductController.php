@@ -6,13 +6,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
+use App\Http\Controllers\HomeController;
 
 class ProductController extends Controller
 {
-    public function __construct()
+    protected $homeController;
+    public function __construct(HomeController $homeController)
     {
         $this->middleware('auth');
         $this->middleware('checkPermission');
+        $this->homeController = $homeController;
     }
     
     public function show_product(){
@@ -22,7 +25,10 @@ class ProductController extends Controller
         ->select('products.*', 'categories.name as category')
         ->get();
 
-        return view('admin.show_product', compact('product'));
+        $total_feedback = $this->homeController->total_feedback();
+        $messages= $this->homeController->message();
+
+        return view('admin.show_product', compact('product','total_feedback','messages'));
     }
 
     public function view_product(Request $request){
@@ -32,7 +38,11 @@ class ProductController extends Controller
         if (isset($id) && $id > 0) {
             $product = product::find($id);
         }
-        return view('admin.product', compact('category','product'));
+
+        $total_feedback = $this->homeController->total_feedback();
+        $messages= $this->homeController->message();
+
+        return view('admin.product', compact('category','product','total_feedback','messages'));
     }
 
     public function add_product(Request $request){
@@ -79,6 +89,8 @@ class ProductController extends Controller
 
     public function searchProduct(Request $request){
         $searchText = $request->search;
+        $total_feedback = $this->homeController->total_feedback();
+        $messages= $this->homeController->message();
 
         $product = product::leftjoin('categories', 'categories.id','=', 'products.category_id')
                     ->where('products.deleted',0)
@@ -86,7 +98,7 @@ class ProductController extends Controller
                     ->orwhere('categories.name', 'LIKE',"%$searchText%")->orwhere('products.price', 'LIKE',"%$searchText%")
                     ->select('products.*', 'categories.name as category')
                     ->get();
-        return view('admin.show_product',compact('product'));
+        return view('admin.show_product',compact('product','total_feedback','messages'));
     }
 
 }

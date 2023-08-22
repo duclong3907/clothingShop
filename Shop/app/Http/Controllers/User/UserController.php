@@ -7,20 +7,25 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Role;
+use App\Http\Controllers\HomeController;
 
 class UserController extends Controller
 {
-    public function __construct()
+    protected $homeController;
+    public function __construct(HomeController $homeController)
     {
         $this->middleware('auth');
         $this->middleware('checkPermission');
+        $this->homeController = $homeController;
     }
     public function show_user(){
         $dataList = User::leftJoin('roles', 'roles.id', '=', 'users.usertype')
         ->select('users.*', 'roles.name as role_name')
         ->get();
+        $total_feedback = $this->homeController->total_feedback();
+        $messages= $this->homeController->message();
 
-        return view('admin.show_user', compact('dataList'));
+        return view('admin.show_user', compact('dataList','total_feedback','messages'));
     }
 
     public function view_user(Request $request){
@@ -34,7 +39,10 @@ class UserController extends Controller
                 $user = null;
             }
         }
-        return view('admin.view_user', compact('user', 'roleList'));
+        $total_feedback = $this->homeController->total_feedback();
+        $messages= $this->homeController->message();
+
+        return view('admin.view_user', compact('user', 'roleList','total_feedback','messages'));
     }
 
     public function add_user(Request $request) {
@@ -89,10 +97,13 @@ class UserController extends Controller
 
     public function searchUser(Request $request){
         $searchText = $request->search;
+        $total_feedback = $this->homeController->total_feedback();
+        $messages= $this->homeController->message();
+
         $dataList = user::where('name', 'LIKE',"%$searchText%")->orwhere('email', 'LIKE',"%$searchText%")
                     ->orwhere('phone', 'LIKE',"%$searchText%")->orwhere('address', 'LIKE',"%$searchText%")->get();
 
-        return view('admin.show_user',compact('dataList'));
+        return view('admin.show_user',compact('dataList','total_feedback','messages'));
     }
 
 }

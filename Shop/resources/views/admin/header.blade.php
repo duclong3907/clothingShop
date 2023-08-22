@@ -2,7 +2,7 @@
   <!-- partial:partials/_navbar.html -->
   <nav class="navbar p-0 fixed-top d-flex flex-row">
     <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
-      <a class="navbar-brand brand-logo-mini" href="index.html"><img src="themes/admin/assets/images/logo.gif"
+      <a class="navbar-brand brand-logo-mini" href="{{url('/redirect')}}"><img src="themes/admin/assets/images/logo.gif"
           alt="logo" style="min-width: 30vw;"/></a>
     </div>
     <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
@@ -19,41 +19,41 @@
       <ul class="navbar-nav navbar-nav-right">
         <li class="nav-item dropdown d-none d-lg-block">
           <a class="nav-link btn btn-success create-new-button" id="createbuttonDropdown" data-toggle="dropdown"
-            aria-expanded="false" href="#">+ Create New Project</a>
+            aria-expanded="false" href="#">+ Create New Function</a>
           <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
             aria-labelledby="createbuttonDropdown">
-            <h6 class="p-3 mb-0">Projects</h6>
+            <h6 class="p-3 mb-0">Functions</h6>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item preview-item">
+            <a class="dropdown-item preview-item" href="{{url('/view_user')}}">
               <div class="preview-thumbnail">
                 <div class="preview-icon bg-dark rounded-circle">
                   <i class="mdi mdi-file-outline text-primary"></i>
                 </div>
               </div>
               <div class="preview-item-content">
-                <p class="preview-subject ellipsis mb-1">Software Development</p>
+                <p class="preview-subject ellipsis mb-1">Account</p>
               </div>
             </a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item preview-item">
+            <a class="dropdown-item preview-item" href="{{url('view_category')}}">
               <div class="preview-thumbnail">
                 <div class="preview-icon bg-dark rounded-circle">
                   <i class="mdi mdi-web text-info"></i>
                 </div>
               </div>
               <div class="preview-item-content">
-                <p class="preview-subject ellipsis mb-1">UI Development</p>
+                <p class="preview-subject ellipsis mb-1">Categories</p>
               </div>
             </a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item preview-item">
+            <a class="dropdown-item preview-item" href="{{url('/view_product')}}">
               <div class="preview-thumbnail">
                 <div class="preview-icon bg-dark rounded-circle">
                   <i class="mdi mdi-layers text-danger"></i>
                 </div>
               </div>
               <div class="preview-item-content">
-                <p class="preview-subject ellipsis mb-1">Software Testing</p>
+                <p class="preview-subject ellipsis mb-1">Products</p>
               </div>
             </a>
             <div class="dropdown-divider"></div>
@@ -73,38 +73,21 @@
           </a>
           <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
             <h6 class="p-3 mb-0">Messages</h6>
+            @foreach($messages as $message)
+            <?php $index++?>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item preview-item">
               <div class="preview-thumbnail">
-                <img src="themes/admin/assets/images/faces/face4.jpg" alt="image" class="rounded-circle profile-pic">
+                <img src="{{$message->image}}" alt="image" class="rounded-circle profile-pic">
               </div>
               <div class="preview-item-content">
-                <p class="preview-subject ellipsis mb-1">Mark send you a message</p>
-                <p class="text-muted mb-0"> 1 Minutes ago </p>
+                <p class="preview-subject ellipsis mb-1">{{$message->subject_name}}</p>
+                <p class="text-muted mb-0"> {{$index+1}} Minutes ago </p>
               </div>
             </a>
+            @endforeach
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item preview-item">
-              <div class="preview-thumbnail">
-                <img src="themes/admin/assets/images/faces/face2.jpg" alt="image" class="rounded-circle profile-pic">
-              </div>
-              <div class="preview-item-content">
-                <p class="preview-subject ellipsis mb-1">Cregh send you a message</p>
-                <p class="text-muted mb-0"> 15 Minutes ago </p>
-              </div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item preview-item">
-              <div class="preview-thumbnail">
-                <img src="themes/admin/assets/images/faces/face3.jpg" alt="image" class="rounded-circle profile-pic">
-              </div>
-              <div class="preview-item-content">
-                <p class="preview-subject ellipsis mb-1">Profile picture updated</p>
-                <p class="text-muted mb-0"> 18 Minutes ago </p>
-              </div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <p class="p-3 mb-0 text-center">4 new messages</p>
+            <p class="p-3 mb-0 text-center">{{$total_feedback}} new messages</p>
           </div>
         </li>
         <li class="nav-item dropdown border-left">
@@ -158,8 +141,8 @@
         <li class="nav-item dropdown">
           <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
             <div class="navbar-profile">
-              <img class="img-xs rounded-circle" src="themes/admin/assets/images/in4.jpg" alt="">
-              <p class="mb-0 d-none d-sm-block navbar-profile-name">Đức Long</p>
+              <img class="img-xs rounded-circle" src="{{Auth::user()->image}}" alt="">
+              <p class="mb-0 d-none d-sm-block navbar-profile-name">{{Auth::user()->name}}</p>
               <i class="mdi mdi-menu-down d-none d-sm-block"></i>
             </div>
           </a>

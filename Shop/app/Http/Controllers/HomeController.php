@@ -32,6 +32,17 @@ class HomeController extends Controller
         return view('frontend.userpage', compact('products','cartNum'));
     }
 
+    public function message(){
+        $messages= feedback::leftjoin('users', 'users.id','=', 'feedback.user_id')
+                        ->select('feedback.*', 'users.image')->paginate(4);
+        return $messages;
+    }
+
+    public function total_feedback(){
+        $total_feedback = feedback::all()->count();
+        return $total_feedback;
+    }
+
     public function redirect()
     {
         $usertype=Auth::user()->usertype;
@@ -56,11 +67,9 @@ class HomeController extends Controller
             ->orderBy('orders.created_at', 'DESC')
             ->paginate(5);
 
-            $messages= feedback::leftjoin('users', 'users.id','=', 'feedback.user_id')
-            ->select('feedback.*', 'users.image')->paginate(4);
-
-            $total_feedback = feedback::all()->count();
-            // dd($itemList);
+            $total_feedback = $this->total_feedback();
+            $messages= $this->message();
+            
             return view('admin.home',compact('total_product','total_order','total_user','total_revenue','total_feedback','discount','price','messages','order_items'));
         } else{
             $products = Product::where('deleted', 0)

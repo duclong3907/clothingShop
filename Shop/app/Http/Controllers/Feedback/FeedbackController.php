@@ -8,18 +8,24 @@ use App\Models\Feedback;
 
 use Notification;
 use App\Notifications\SendEmailNotification;
+use App\Http\Controllers\HomeController;
 
 class FeedbackController extends Controller
 {
-    public function __construct()
+    protected $homeController;
+    public function __construct(HomeController $homeController)
     {
         $this->middleware('auth');
         $this->middleware('checkPermission');
+        $this->homeController = $homeController;
     }
     
     public function show_feedback(){
         $dataList=feedback::all();
-        return view('admin.show_feedback', compact('dataList'));
+        $total_feedback = $this->homeController->total_feedback();
+        $messages= $this->homeController->message();
+
+        return view('admin.show_feedback', compact('dataList','total_feedback','messages'));
     }
 
     public function markRead( $id){
@@ -39,8 +45,10 @@ class FeedbackController extends Controller
 
     public function send_email( $id){
         $contact= feedback::find($id);
+        $total_feedback = $this->homeController->total_feedback();
+        $messages= $this->homeController->message();
 
-        return view('admin.email_info', compact('contact'));
+        return view('admin.email_info', compact('contact','total_feedback','messages'));
     }
 
     public function send_user_email(Request $request, $id){
@@ -62,9 +70,12 @@ class FeedbackController extends Controller
 
     public function searchFeedback(Request $request){
         $searchText = $request->search;
+        $total_feedback = $this->homeController->total_feedback();
+        $messages= $this->homeController->message();
+
         $dataList = feedback::where('fullname', 'LIKE',"%$searchText%")->orwhere('email', 'LIKE',"%$searchText%")
                     ->orwhere('phone', 'LIKE',"%$searchText%")->orwhere('subject_name', 'LIKE',"%$searchText%")->get();
 
-        return view('admin.show_feedback',compact('dataList'));
+        return view('admin.show_feedback',compact('dataList','total_feedback','messages'));
     }
 }
