@@ -6,7 +6,7 @@
          </h2>
       </div>
       <form action="{{url('product_search')}}" style="text-align: center;">
-         <input type="text" name="search" placeholder="Search for something" style="width:50%;">
+         <input type="text" name="search" placeholder="Search for something" class="inputSearch">
          <input type="submit" value="Search">
       </form>
       <div class="row">

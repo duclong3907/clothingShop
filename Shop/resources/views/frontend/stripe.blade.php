@@ -9,6 +9,13 @@ $userId = Auth::id();
     <base href="/public">
     @include('frontend.css')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <style>
+        @media(max-width:350px){
+            form input[type="submit"] {
+                padding:15px 10px;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -77,7 +84,7 @@ $userId = Auth::id();
                                         <input type="text" name="lastline" class="form-control" hidden value="Payment status: Cash on Delivery">
                                         <input type="text" name="button" class="form-control" hidden value="Continue to buy">
                                         <input type="text" name="url" class="form-control" hidden value="http://127.0.0.1:8000/">
-                                        <input type="submit" value="Pay Now ({{number_format($totalmoney)}} VNDC)"></input>
+                                        <input type="submit" value="Pay Now ({{number_format($totalmoney)}} VNDC)" class="payment"></input>
                                     </div>
                                 </div>
                             </form>

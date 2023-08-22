@@ -76,7 +76,7 @@
             @foreach($messages as $message)
             <?php $index++?>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item preview-item">
+            <a class="dropdown-item preview-item" href="{{url('show_feedback')}}">
               <div class="preview-thumbnail">
                 <img src="{{$message->image}}" alt="image" class="rounded-circle profile-pic">
               </div>

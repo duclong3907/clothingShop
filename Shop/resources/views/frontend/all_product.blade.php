@@ -10,14 +10,26 @@ $title="All Products";
          text-align: center;
          padding: 0 0 10px;
       }
-
-      .fillComment{
-         height:150px;
-         width:50vw;
+      .inputSearch{
+         width: 50%;
       }
-      .allComment{
-         padding-left:20%;
-         font-size:20px;
+      @media (max-width: 1000px){
+         .product_section .box .detail-box h5{
+            font-size: 13px;
+         }
+         .product_section .box .detail-box h6 {
+            font-size: 13px;
+         }
+      }
+      @media (max-width: 767px){
+         .inputSearch{
+            width: 70%;
+         }
+      }
+      @media (max-width: 335px){
+         .inputSearch{
+            width: 100%;
+         }
       }
    </style>
    </head>
@@ -25,15 +37,11 @@ $title="All Products";
    @include('sweetalert::alert')
       <div class="hero_area">
       @include('frontend.header')
-         <!-- slider section -->
-      
-      
+
       <!-- product section -->
       @include('frontend.product_view')
       <!-- end product section -->
 
-
-     
       <!-- footer start -->
       @include('frontend.footer')
       <!-- footer end -->

@@ -6,6 +6,47 @@ $title="Home";
 
 <head>
    @include("frontend.css")
+   <style>
+      .arrival_section img{
+         width: 100%;
+         height: 100%;
+      }
+      .arrival_section .description{
+         padding: 100px 45px;
+      }
+      .inputSearch{
+         width: 50%;
+      }
+       @media (max-width: 1000px) {
+         .heading_container h2 {
+            font-size: 2.5rem;
+         }
+         .arrival_section p{
+            font-size:1rem;
+         }
+         @media (max-width: 1000px){
+         .product_section .box .detail-box h5{
+            font-size: 13px;
+         }
+         .product_section .box .detail-box h6 {
+            font-size: 13px;
+         }
+      }
+      }
+      @media (max-width: 767px){
+         .arrival_section .description{
+            padding: 40px 45px;
+         }
+         .inputSearch{
+            width: 70%;
+         }
+      }
+      @media (max-width: 335px){
+         .inputSearch{
+            width: 100%;
+         }
+      }
+   </style>
 </head>
 
 <body>

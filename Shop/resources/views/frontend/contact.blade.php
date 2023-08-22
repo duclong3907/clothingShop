@@ -102,6 +102,66 @@ $title="Contact";
       form input {
          text-transform: none;
       }
+
+      .arrival_section img{
+         width: 100%;
+         height: 100%;
+      }
+      .arrival_section .description{
+         padding: 100px 45px;
+      }
+      
+      /* responsive */
+      @media (max-width: 995px) {
+         .heading_container h2 {
+            font-size: 2.5rem;
+         }
+         .arrival_section p{
+            font-size:1rem;
+         }
+      }
+      @media (max-width: 767px){
+         .arrival_section .description{
+            padding: 40px 45px;
+         }
+      }
+      @media(max-width:400px) {
+         .inner_page_head h3 {
+            font-size:20px;
+         }
+         .arrival_section img{
+            padding-top: 20px;
+         }
+         .popup {
+            width: 300px;
+         }
+
+         .popup img {
+            width: 80px;
+            margin-top: -40px;
+         }
+
+         .popup h2 {
+            font-size: 28px;
+            margin: 16px 0 10px;
+         }
+         .popup p{
+            margin-bottom: -2rem;
+            font-size: 14px;
+         }
+         .popup button{
+            font-size: 16px;
+            width: 80%;
+         }
+      }
+      @media(max-width:300px){
+         .popup {
+            width: 250px;
+         }
+         .arrival_section img{
+            display:none;
+         }
+      }
    </style>
 </head>
 
@@ -112,7 +172,7 @@ $title="Contact";
 
       <!-- inner page section -->
       <section class="inner_page_head">
-         <div class="container_fuild">
+         <div class="container-fluid">
             <div class="row">
                <div class="col-md-12">
                   <div class="full">
@@ -152,18 +212,17 @@ $title="Contact";
                </div>
             </div>
          </div>
-   </div>
    </section>
    <!-- end why section -->
    <!-- arrival section -->
    <section class="arrival_section">
-      <div class="container">
-         <div class="box">
-            <div class="arrival_bg_box">
-               <img src="{{ asset('themes/frontend/images/sonyejin1.png') }}" alt="">
-            </div>
+      <div class="container" style="position: relative;">
+         <!-- <div class="box"> -->
             <div class="row">
-               <div class="col-md-6 ml-auto">
+               <div class="col-md-6 text-center">
+                  <img src="{{ asset('themes/frontend/images/sonyejin1.png') }}"/>
+               </div>
+               <div class="col-md-6 ml-auto description">
                   <div class="heading_container remove_line_bt">
                      <h2>
                         New Arrivals
@@ -180,8 +239,9 @@ $title="Contact";
                </div>
             </div>
          </div>
-      </div>
+      <!-- </div> -->
    </section>
+</div>
 
    <!-- end client section -->
    <!-- footer start -->

@@ -1,7 +1,7 @@
 <section class="product_section">
          <div class="container">
             <form action="{{url('search_product')}}" style="text-align: center;">
-               <input type="text" name="search" placeholder="Search for something" style="width:50%;">
+               <input type="text" name="search" placeholder="Search for something" class="inputSearch">
             </form>
             <div class="row">
                @foreach($products as $product)

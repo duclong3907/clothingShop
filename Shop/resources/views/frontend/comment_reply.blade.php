@@ -1,16 +1,3 @@
-<style>
-    .card-inner {
-        margin-left: 4rem;
-    }
-
-    .img-account-profile {
-        height: 10rem;
-        border: 1px solid #000;
-        border-radius: 50%;
-        height: 150px;
-        width: 150px;
-    }
-</style>
 <div class="container">
     <div class="div_center">
         <h2 style="font-size:30px; padding:20px 0;">Comments</h2>
