@@ -258,9 +258,9 @@ $totalmoney=0;
                     <form action="" method="POST" id="checkoutForm">
                         @csrf
                         <div class="row">
-                            <input type="text" value="{{$user->name}}" name="name" id="name">
-                            <input type="text" value="{{$user->phone}}" name="phone" id="phone">
-                            <input type="text" value="{{$user->address}}" name="address" id="address">
+                            <input type="text" value="{{$user->name}}" name="name" id="name" placeholder="Enter name">
+                            <input type="text" value="{{$user->phone}}" name="phone" id="phone" placeholder="Enter phone">
+                            <input type="text" value="{{$user->address}}" name="address" id="address" placeholder="Enter address">
                         </div>
                         <div class="row">
                             <p>Payment methods:</p>

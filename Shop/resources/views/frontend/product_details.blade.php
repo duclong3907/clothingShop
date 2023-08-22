@@ -101,7 +101,7 @@ $title="Detail";
                      </li>
                   </ul>
                   <p style="color: red; font-size: 30px; margin-top: 15px; margin-bottom: 15px;">{{
-                     number_format($product->discount_price) }} VNDC</p>
+                     number_format(($product->discount_price != null || $product->discount_price != 0) ? $product->discount_price : $product->price) }} VNDC</p>
                   <p
                      style="color: grey; font-size: 15px; margin-top: 15px; margin-bottom: 15px; text-decoration: line-through;">
                      <del>{{ number_format($product->price) }} VNDC</del>
@@ -155,14 +155,32 @@ $title="Detail";
                            </form>
                         </div>
                      </div>
-                     <div>
-                        <img src="{{ $item->image }}" alt="{{ $item->title }}" style="width: 100%; height: 200px">
-                        <h5 style="height:70px;">
-                           {{ $item->title }}
+                     <div class="img-box">
+                        <img src="{{$item->image}}" alt="">
+                     </div>
+                     <div class="detail-box">
+                        <h5>
+                           {{$item->title}}
                         </h5>
-                        <h6>
-                           {{ number_format($item->discount_price, 0) }} vnd
+
+                        @if($item->discount_price != null)
+                        <h6 style="color:red;">
+                        Discount</br>
+                        {{ number_format($item->discount_price, 0) }}
                         </h6>
+                        
+                        <h6 style="text-decoration:line-through;">
+                        Price</br>
+                        {{ number_format($item->price, 0) }}
+                        </h6>
+                        @else
+
+                        <h6>
+                        Price</br>
+                        {{ number_format($item->price, 0) }}
+                        </h6>
+
+                        @endif
                      </div>
                   </div>
                </div>

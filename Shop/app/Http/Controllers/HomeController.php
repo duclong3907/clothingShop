@@ -93,6 +93,7 @@ class HomeController extends Controller
     public function product_details($id){
         $product = Product::find($id);
         $productList = Product::where('deleted', 0)
+                        ->where('id','!=', $product->id)
                         ->orderBy('created_at', 'asc')
                         ->paginate(3);
 
