@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Feedback;
+use App\Models\Comment;
+use App\Models\Reply;
 use App\Http\Controllers\HomeController;
 
 class UserController extends Controller
@@ -89,7 +92,14 @@ class UserController extends Controller
     }
 
     public function delete_user($id){
-        $userId = user::find($id);
+        $userId = user::find($id);;
+        $feedback = Feedback::where('user_id', $userId->id)->count();
+        $comment= Comment::where('user_id', $userId->id)->count();
+        $reply = Reply::where('user_id', $userId->id)->count();
+            
+        if ($feedback > 0 || $comment > 0 || $reply > 0) {
+            return redirect()->back()->with('message', 'Cannot delete this account. It has associated feedbacks or comments or reply.');
+        }
 
         $userId ->delete();
         return redirect()->back()->with('message', 'User deleted successfully');
