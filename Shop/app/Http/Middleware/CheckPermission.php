@@ -17,7 +17,6 @@ class CheckPermission
     public function handle(Request $request, Closure $next): Response
     {
         if(Auth::user() -> usertype !=1){
-            //ko dc vao, tra ve trang home
             return redirect()->route('login');
         }
         return $next($request);

@@ -12,7 +12,6 @@ class ApiController extends Controller
         $target_file = public_path($target_dir . basename($_FILES["file"]["name"]));
         $uploadOk = 1;
         $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
         // Check if image file is a actual image or fake image
         if(isset($_POST["submit"])) {
             $check = getimagesize($_FILES["file"]["tmp_name"]);
@@ -20,7 +19,6 @@ class ApiController extends Controller
                 $uploadOk = 0;
             }
         }
-
         // Check if file already exists
         // if (file_exists($target_file)) {
         //     $uploadOk = 0;
@@ -32,14 +30,12 @@ class ApiController extends Controller
             $uploadOk = 0;
             $message = "File size is too large.";
         }
-
         // Allow certain file formats
         $allowedExtensions = ["jpg", "png", "jpeg", "gif", "webp", "svg", "bmp"];
         if(!in_array($imageFileType, $allowedExtensions)) {
             $uploadOk = 0;
             $message = "Invalid file format.";
         }
-
         // Check if $uploadOk is set to 0 by an error
         if ($uploadOk == 0) {
             return json_encode([

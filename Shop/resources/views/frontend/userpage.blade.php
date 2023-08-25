@@ -7,10 +7,6 @@ $title="Home";
 <head>
    @include("frontend.css")
    <style>
-      .arrival_section img{
-         width: 100%;
-         height: 100%;
-      }
       .arrival_section .description{
          padding: 100px 45px;
       }
@@ -39,6 +35,10 @@ $title="Home";
          }
          .inputSearch{
             width: 70%;
+         }
+         .arrival_section img{
+            width: 100%;
+            height: 100%;
          }
       }
       @media (max-width: 335px){

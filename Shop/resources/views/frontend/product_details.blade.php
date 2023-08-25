@@ -94,7 +94,7 @@ $title="Detail";
                      ?>
 
                      <li class="evaluate">
-                        79 Evaluate
+                        {{$comment->count()+$reply->count()}} Evaluate
                      </li>
                      <li class="evaluate">
                         {{$product->quantity}} Sold

@@ -210,6 +210,8 @@
                             <td>
                               @if($item->delivery_status =='processing')
                               <div class="badge badge-outline-success">Approved</div>
+                              @elseif($item->delivery_status =='Delivered')
+                              <div class="badge badge-outline-primary">Delivered</div>
                               @else
                               <div class="badge badge-outline-danger">Cancelled</div>
                               @endif

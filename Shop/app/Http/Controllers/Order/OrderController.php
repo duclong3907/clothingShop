@@ -21,7 +21,7 @@ class OrderController extends Controller
     }
     
     public function order(){
-        $order = Order::all();
+        $order = Order::orderBy('created_at', 'DESC')->get();
         $total_feedback = $this->homeController->total_feedback();
         $messages= $this->homeController->message();
 
@@ -74,7 +74,6 @@ class OrderController extends Controller
         ->where('order_details.order_id', $order->id)
         ->select('order_details.*', 'products.title', 'products.image')
         ->get();
-        // dd($order_detail);
         $name = $order->name;
 
         $pdf = PDF::loadView('admin.pdf',compact('order','order_detail'));

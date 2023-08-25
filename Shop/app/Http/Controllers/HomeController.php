@@ -100,12 +100,14 @@ class HomeController extends Controller
         $cartNum = $this->getCartNum();
         $comment = Comment::leftjoin('users','users.id','=','comments.user_id')
                         ->where('product_id', $id)
-                        ->orderby('id', 'desc')
+                        ->orderby('created_at', 'desc')
                         ->select('users.image','comments.*')->get();
 
+        $commentIds = Comment::where('product_id', $id)->pluck('id');
         $reply = reply::leftjoin('comments', 'comments.id','=','replies.comment_id')
                         ->leftjoin('users','users.id','=','replies.user_id')
-                        ->orderby('id', 'desc')
+                        ->whereIn('comment_id', $commentIds)
+                        ->orderby('created_at', 'desc')
                         ->select('replies.*','users.image')->get();
         return view('frontend.product_details', compact('product', 'productList','cartNum','comment','reply'));
     }
@@ -281,6 +283,7 @@ class HomeController extends Controller
             ->where('orders.user_id', $userid)
             ->where('order_details.deleted',0)
             ->select('order_details.*', 'products.title', 'products.image', 'orders.*')
+            ->orderBy('order_details.created_at', 'DESC')
             ->get();
            return view('frontend.order',compact('order', 'cartNum'));
         } else{
@@ -294,7 +297,7 @@ class HomeController extends Controller
         $order -> delivery_status = 'Cancelled';
         $order->save();
         return redirect()->back()->with('message', 'Order cancelled successfully');;
-   }    
+    }    
 
    public function delete_orders($id){
         $order = order::find($id);
@@ -384,15 +387,11 @@ class HomeController extends Controller
 
     public function contact(){
         if(Auth::id()){
-            $data = feedback::all();
             $cartNum = $this->getCartNum();
-            return view('frontend.contact', compact('data','cartNum'));
+            return view('frontend.contact', compact('cartNum'));
         }else{
             return redirect('login');
         }
-
-        $data = feedback::all();
-        return view('frontend.contact', compact('data'));
     }
 
     public function add_feedback(Request $request){
@@ -421,18 +420,18 @@ class HomeController extends Controller
    }
 
    public function edit_profile(Request $request){
-    $userId = Auth::id();
+        $userId = Auth::id();
         $user = User::find($userId);
         $user->name = $request->name;
         $user->image = $request->image;
-            $user->email = $request->email;
-            $user->phone = $request->phone;
-            $user->address = $request->address;
-            if ($request->has('password') && $request->password !== '') {
-                $user->password = Hash::make($request->password);
-            }
-            $user->save();
-            Alert::success('Update successfully', 'You updated your profile!!!');
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->address = $request->address;
+        if ($request->has('password') && $request->password !== '') {
+            $user->password = Hash::make($request->password);
+        }
+        $user->save();
+        Alert::success('Update successfully', 'You updated your profile!!!');
         return redirect()->back();
    }
 

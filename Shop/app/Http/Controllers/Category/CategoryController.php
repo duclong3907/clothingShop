@@ -53,17 +53,16 @@ class CategoryController extends Controller
 
 
     public function delete_category($id){
-            $category = Category::findOrFail($id);
-            // Kiểm tra xem category có sản phẩm liên kết trong bảng product hay không
-            $productCount = Product::where('category_id', $id)->count();
-            if ($productCount > 0) {
-                return redirect()->back()->with('message', 'Cannot delete category. It has associated products.');
-            }
-    
-            // Nếu không có sản phẩm liên kết, thì mới tiến hành xóa category
-            $category->delete();
+        $category = Category::findOrFail($id);
+        $productCount = Product::where('category_id', $id)->count();
             
-            return redirect()->back()->with('message', 'Category deleted successfully');
+        if ($productCount > 0) {
+            return redirect()->back()->with('message', 'Cannot delete category. It has associated products.');
+        }
+    
+        $category->delete();
+            
+        return redirect()->back()->with('message', 'Category deleted successfully');
     }
 
 }

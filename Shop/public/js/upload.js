@@ -2,7 +2,7 @@ function uploadFile(e, target_id) {
   if (e != null) {
     file = e.target.files[0];
     if (!file.name.match(/.(jpg|jpeg|png|gif|bmp|webp|svg)$/i)) {
-      alert('The image you uploaded is not in the correct file format, please check again (jpg, jpeg, png, bmp, gif)');
+      alert('The image you uploaded is not in the correct file format)');
       return;
     }
   }
@@ -30,8 +30,8 @@ function uploadFile(e, target_id) {
       }
     }
   };
-
-  fd.append('tags', 'browser_upload'); // Optional - add tag for image admin in Cloudinary
+// Optional - add tag for image admin in Cloudinary
+  fd.append('tags', 'browser_upload'); 
   if (e != null) {
     fd.append('file', file);
   }

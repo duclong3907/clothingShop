@@ -84,12 +84,12 @@ $search="";
                             <div class="form-group">
                                 <label>Password: </label>
                                 <input type="password" name="password" class="form-control" {{ ($user !=null) ? ''
-                                    : 'required="true"' }} min="6">
+                                    : 'required="true"' }} value="" min="8">
                             </div>
                             <div class="form-group">
                                 <label>Confirm Password: </label>
                                 <input type="password" name="confirm_pwd" class="form-control" {{ ($user !=null) ? ''
-                                    : 'required="true"' }} min="6">
+                                    : 'required="true"' }} value="" min="8">
                             </div>
                             <div class="form-group">
                                 <label>Role Name: </label>

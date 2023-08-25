@@ -1,34 +1,58 @@
-<x-guest-layout>
-    <x-authentication-card>
-        <x-slot name="logo">
-            <x-authentication-card-logo />
-        </x-slot>
+@php
+$title = "Login";
+@endphp
 
-        <div class="mb-4 text-sm text-gray-600">
-            {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
-        </div>
+@extends('layouts.master-auth')
 
-        @if (session('status'))
-            <div class="mb-4 font-medium text-sm text-green-600">
-                {{ session('status') }}
-            </div>
-        @endif
+@section('css')
+@include('auth.css')
+@stop
 
-        <x-validation-errors class="mb-4" />
-
-        <form method="POST" action="{{ route('password.email') }}">
-            @csrf
-
-            <div class="block">
-                <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <x-button>
-                    {{ __('Email Password Reset Link') }}
-                </x-button>
-            </div>
-        </form>
-    </x-authentication-card>
-</x-guest-layout>
+@section('content')
+<div class="container">
+	<div class="d-flex justify-content-center h-100">
+		<div class="card">
+			<div class="card-header">
+				<h3>Forgot-password</h3>
+				<div class="d-flex justify-content-end social_icon">
+					<span><i class="fab fa-facebook-square"></i></span>
+					<span><i class="fab fa-google-plus-square"></i></span>
+					<span><i class="fab fa-twitter-square"></i></span>
+				</div>
+			</div>
+            @if (session('status'))
+                <div class="mb-4 font-medium text-sm text-green-600" style="color:#1a9bfc; text-align: center; margin-top:20px">
+                    {{ session('status') }}
+                </div>
+            @endif
+			<div class="card-body" style="padding:20px 30px 30px 30px;">
+                <form method="POST" action="{{ route('password.email') }}">
+					@csrf
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-envelope"></i></span>
+						</div>
+						<input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                        name="email" :value="old('email')" required autofocus autocomplete="username"
+							placeholder="Enter email">
+						@error('email')
+						<span class="invalid-feedback" role="alert">
+							<strong>{{ $message }}</strong>
+						</span>
+						@enderror
+					</div>
+					<div class="d-flex justify-content-center" style="margin-top: 10px;">
+						<input type="submit" value="Send" class="btn float-right btn_send">
+					</div>
+				</form>
+			</div>
+			<div class="card-footer">
+				<div class="d-flex justify-content-center links">
+					Back to login?<a href="/login">Login</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</section>
+@endsection
